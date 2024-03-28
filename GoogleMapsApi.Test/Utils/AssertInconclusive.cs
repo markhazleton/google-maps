@@ -7,7 +7,6 @@ using GoogleMapsApi.Entities.Places.Response;
 using GoogleMapsApi.Entities.PlacesDetails.Response;
 using GoogleMapsApi.Entities.PlacesFind.Response;
 using GoogleMapsApi.Entities.PlacesNearBy.Response;
-using GoogleMapsApi.Entities.PlacesRadar.Response;
 using GoogleMapsApi.Entities.PlacesText.Response;
 using GoogleMapsApi.Entities.TimeZone.Response;
 using NUnit.Framework;

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using GoogleMapsApi.Engine;
 using NUnit.Framework;
-using GoogleMapsApi.Engine;
+using System;
 
 namespace GoogleMapsApi.Test
 {

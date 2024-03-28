@@ -1,7 +1,7 @@
 namespace GoogleMapsApi.Entities.Common
 {
-	public interface ILocationString
-	{
-		string LocationString { get; }
-	}
+    public interface ILocationString
+    {
+        string LocationString { get; }
+    }
 }

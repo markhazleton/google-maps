@@ -1,13 +1,13 @@
-﻿using System;
+﻿using GoogleMapsApi.Entities.Common;
+using GoogleMapsApi.Entities.Geocoding.Request;
+using GoogleMapsApi.Test.Utils;
+using NUnit.Framework;
+using System;
 using System.Linq;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
-using GoogleMapsApi.Entities.Common;
-using GoogleMapsApi.Entities.Geocoding.Request;
-using NUnit.Framework;
 using Status = GoogleMapsApi.Entities.Geocoding.Response.Status;
-using GoogleMapsApi.Test.Utils;
 
 namespace GoogleMapsApi.Test.IntegrationTests
 {

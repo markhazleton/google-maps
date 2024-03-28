@@ -1,8 +1,8 @@
-﻿using System;
+﻿using GoogleMapsApi.Entities.Common;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
-using System.Collections.Generic;
-using GoogleMapsApi.Entities.Common;
 
 namespace GoogleMapsApi.Entities.PlacesDetails.Response
 {
@@ -12,8 +12,8 @@ namespace GoogleMapsApi.Entities.PlacesDetails.Response
         /// <summary>
         /// name contains the human-readable name for the returned result. For establishment results, this is usually the canonicalized business name.
         /// </summary>
-    
-        [DataMember(Name="address_components")]
+
+        [DataMember(Name = "address_components")]
         public IEnumerable<GoogleMapsApi.Entities.Geocoding.Response.AddressComponent> AddressComponent { get; set; }
 
 
@@ -58,7 +58,7 @@ namespace GoogleMapsApi.Entities.PlacesDetails.Response
         [DataMember(Name = "price_level")]
         internal string string_PriceLevel
         {
-            get { return PriceLevel.HasValue ? ((int) PriceLevel).ToString(CultureInfo.InvariantCulture) : null; }
+            get { return PriceLevel.HasValue ? ((int)PriceLevel).ToString(CultureInfo.InvariantCulture) : null; }
             set
             {
                 if (value == null)
@@ -67,7 +67,7 @@ namespace GoogleMapsApi.Entities.PlacesDetails.Response
                 {
                     int priceLevelInt;
                     if (int.TryParse(value, out priceLevelInt))
-                        PriceLevel = (PriceLevel) priceLevelInt;
+                        PriceLevel = (PriceLevel)priceLevelInt;
                     else
                         PriceLevel = null;
                 }

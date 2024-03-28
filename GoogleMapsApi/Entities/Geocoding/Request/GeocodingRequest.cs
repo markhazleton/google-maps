@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using GoogleMapsApi.Entities.Common;
+using System;
 using System.Linq;
-using GoogleMapsApi.Entities.Common;
 
 namespace GoogleMapsApi.Entities.Geocoding.Request
 {

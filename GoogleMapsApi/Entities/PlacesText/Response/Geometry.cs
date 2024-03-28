@@ -1,5 +1,5 @@
-﻿using System.Runtime.Serialization;
-using GoogleMapsApi.Entities.Common;
+﻿using GoogleMapsApi.Entities.Common;
+using System.Runtime.Serialization;
 
 namespace GoogleMapsApi.Entities.PlacesText.Response
 {

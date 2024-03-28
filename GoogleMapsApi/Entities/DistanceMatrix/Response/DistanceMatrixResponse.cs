@@ -1,15 +1,15 @@
 ﻿namespace GoogleMapsApi.Entities.DistanceMatrix.Response
 {
+
+    using GoogleMapsApi.Entities.Common;
+    using GoogleMapsApi.Entities.DistanceMatrix.Request;
     using System;
+
     using System.Collections.Generic;
     using System.Runtime.Serialization;
 
-    using GoogleMapsApi.Entities.Common;
-    using GoogleMapsApi.Entities.Directions.Response;
-    using GoogleMapsApi.Entities.DistanceMatrix.Request;
-
     [DataContract(Name = "DistanceMatrixResponse")]
-    public class DistanceMatrixResponse: IResponseFor<DistanceMatrixRequest>
+    public class DistanceMatrixResponse : IResponseFor<DistanceMatrixRequest>
     {
         [DataMember(Name = "status")]
         public string StatusStr
@@ -38,7 +38,7 @@
 
         [DataMember(Name = "origin_addresses")]
         public IEnumerable<string> OriginAddresses { get; set; }
-        
+
         [DataMember(Name = "error_message")]
         public string ErrorMessage { get; set; }
     }

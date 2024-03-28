@@ -3,7 +3,8 @@
     using System.Runtime.Serialization;
 
     [DataContract]
-    public enum DistanceMatrixTravelModes    {
+    public enum DistanceMatrixTravelModes
+    {
         [EnumMember]
         driving, // uses road network.
         [EnumMember]

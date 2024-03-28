@@ -1,5 +1,5 @@
-using System.Runtime.Serialization;
 using GoogleMapsApi.Entities.Common;
+using System.Runtime.Serialization;
 
 namespace GoogleMapsApi.Entities.Places.Response
 {
@@ -10,6 +10,6 @@ namespace GoogleMapsApi.Entities.Places.Response
     public class Geometry
     {
         [DataMember(Name = "location")]
-        public Location Location { get; set; } 
+        public Location Location { get; set; }
     }
 }

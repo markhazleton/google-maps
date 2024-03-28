@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GoogleMapsApi.Entities.Common;
-using GoogleMapsApi.Entities.Directions.Request;
+﻿using GoogleMapsApi.Entities.Directions.Request;
 using GoogleMapsApi.Entities.Directions.Response;
-using NUnit.Framework;
 using GoogleMapsApi.Test.Utils;
+using NUnit.Framework;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GoogleMapsApi.Test.IntegrationTests
@@ -25,22 +23,22 @@ namespace GoogleMapsApi.Test.IntegrationTests
             Assert.Greater(result.Routes.First().Legs.First().Steps.Sum(s => s.Distance.Value), 100);
         }
 
-		[Test]
-		public async Task Directions_ErrorMessage()
-		{
-			var request = new DirectionsRequest
-			{
-				ApiKey = "ABCDEF", // Wrong API Key
-				Origin = "285 Bedford Ave, Brooklyn, NY, USA",
-				Destination = "185 Broadway Ave, Manhattan, NY, USA"
-			};
-			var result = await GoogleMaps.Directions.QueryAsync(request);
+        [Test]
+        public async Task Directions_ErrorMessage()
+        {
+            var request = new DirectionsRequest
+            {
+                ApiKey = "ABCDEF", // Wrong API Key
+                Origin = "285 Bedford Ave, Brooklyn, NY, USA",
+                Destination = "185 Broadway Ave, Manhattan, NY, USA"
+            };
+            var result = await GoogleMaps.Directions.QueryAsync(request);
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(DirectionsStatusCodes.REQUEST_DENIED, result.Status);
-			Assert.IsNotNull (result.ErrorMessage);
-			Assert.IsNotEmpty (result.ErrorMessage);
-		}
+            Assert.IsNotNull(result.ErrorMessage);
+            Assert.IsNotEmpty(result.ErrorMessage);
+        }
 
         [Test]
         public async Task Directions_WithWayPoints()
@@ -59,7 +57,9 @@ namespace GoogleMapsApi.Test.IntegrationTests
         {
             var request = new DirectionsRequest
             {
-                Origin = "NYC, USA", Destination = "Miami, USA", Waypoints = new string[]
+                Origin = "NYC, USA",
+                Destination = "Miami, USA",
+                Waypoints = new string[]
                 {
                     "Seattle, USA",
                     "Dallas, USA",
@@ -172,7 +172,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             var dep_time = DateTime.Today
                             .AddDays(1)
                             .AddHours(13);
-            
+
             var request = new DirectionsRequest
             {
                 Origin = "T-centralen, Stockholm, Sverige",

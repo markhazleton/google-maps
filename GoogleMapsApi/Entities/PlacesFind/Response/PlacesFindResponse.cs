@@ -1,8 +1,8 @@
-﻿using System;
+﻿using GoogleMapsApi.Entities.Common;
+using GoogleMapsApi.Entities.PlacesFind.Request;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using GoogleMapsApi.Entities.Common;
-using GoogleMapsApi.Entities.PlacesFind.Request;
 
 namespace GoogleMapsApi.Entities.PlacesFind.Response
 {

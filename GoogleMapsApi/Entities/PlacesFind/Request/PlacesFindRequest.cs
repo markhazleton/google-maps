@@ -1,6 +1,5 @@
 ﻿using GoogleMapsApi.Entities.Common;
 using System;
-using System.Globalization;
 
 namespace GoogleMapsApi.Entities.PlacesFind.Request
 {

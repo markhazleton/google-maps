@@ -85,7 +85,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
 
         [TestCase("oakfield road, chea", "CHEADLE")]
         [TestCase("128 abbey r", "MACCLESFIELD")]
-        public async Task CheckForExpectedRoad( string aSearch, string anExpected)
+        public async Task CheckForExpectedRoad(string aSearch, string anExpected)
         {
             var request = new PlaceAutocompleteRequest
             {
@@ -104,7 +104,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
         }
 
         [Test(Description = "Ensures that it is ok to sent 0 as a radius value")]
-        public async Task CheckZeroRadius() 
+        public async Task CheckZeroRadius()
         {
             var request = CreatePlaceAutocompleteRequest("RIX", 0);
             PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request);
@@ -112,7 +112,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             Assert.AreNotEqual(Status.ZERO_RESULTS, result.Status);
         }
         [Test(Description = "Ensures that it is ok to sent negative value as a radius")]
-        public async Task CheckNegativeRadius() 
+        public async Task CheckNegativeRadius()
         {
             var request = CreatePlaceAutocompleteRequest("RIX", -1);
             PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request);
@@ -121,7 +121,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
         }
 
         [Test(Description = "Ensures that it is ok to sent huge value as a radius")]
-        public async Task CheckLargerThenEarthRadius() 
+        public async Task CheckLargerThenEarthRadius()
         {
             var request = CreatePlaceAutocompleteRequest("RIX", 30000000);
             PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request);
@@ -129,9 +129,9 @@ namespace GoogleMapsApi.Test.IntegrationTests
             Assert.AreNotEqual(Status.ZERO_RESULTS, result.Status);
         }
 
-        private PlaceAutocompleteRequest CreatePlaceAutocompleteRequest(string query, double? radius) 
+        private PlaceAutocompleteRequest CreatePlaceAutocompleteRequest(string query, double? radius)
         {
-            return new PlaceAutocompleteRequest 
+            return new PlaceAutocompleteRequest
             {
                 ApiKey = base.ApiKey,
                 Input = query,

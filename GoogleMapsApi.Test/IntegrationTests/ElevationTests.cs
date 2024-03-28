@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using GoogleMapsApi.Entities.Common;
+﻿using GoogleMapsApi.Entities.Common;
 using GoogleMapsApi.Entities.Elevation.Request;
-using NUnit.Framework;
 using GoogleMapsApi.Test.Utils;
+using NUnit.Framework;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GoogleMapsApi.Test.IntegrationTests
@@ -40,6 +40,6 @@ namespace GoogleMapsApi.Test.IntegrationTests
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Entities.Elevation.Response.Status.OK, result.Status);
             Assert.AreEqual(16.92, result.Results.First().Elevation, 1.0);
-        } 
+        }
     }
 }

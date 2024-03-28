@@ -3,8 +3,6 @@
     using System;
     using System.Runtime.Serialization;
 
-    using GoogleMapsApi.Entities.Directions.Response;
-
     [DataContract(Name = "element")]
     public class Element
     {

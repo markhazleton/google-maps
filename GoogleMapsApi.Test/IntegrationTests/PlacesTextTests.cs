@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using GoogleMapsApi.Entities.PlacesText.Request;
+﻿using GoogleMapsApi.Entities.PlacesText.Request;
 using GoogleMapsApi.Entities.PlacesText.Response;
-using NUnit.Framework;
 using GoogleMapsApi.Test.Utils;
+using NUnit.Framework;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GoogleMapsApi.Test.IntegrationTests

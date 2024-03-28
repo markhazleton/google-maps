@@ -1,9 +1,9 @@
 namespace GoogleMapsApi.StaticMaps.Enums
 {
-	public enum MarkerSize
-	{
-		Mid,
-		Tiny,
-		Small
-	}
+    public enum MarkerSize
+    {
+        Mid,
+        Tiny,
+        Small
+    }
 }

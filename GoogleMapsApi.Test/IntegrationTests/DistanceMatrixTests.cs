@@ -1,13 +1,12 @@
 ﻿namespace GoogleMapsApi.Test.IntegrationTests
 {
-    using System;
-    using System.Linq;
-    using GoogleMapsApi.Engine;
     using GoogleMapsApi.Entities.DistanceMatrix.Request;
     using GoogleMapsApi.Entities.DistanceMatrix.Response;
-
-    using NUnit.Framework;
     using GoogleMapsApi.Test.Utils;
+    using NUnit.Framework;
+
+    using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     [TestFixture]
@@ -29,7 +28,7 @@
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(DistanceMatrixStatusCodes.OK, result.Status, result.ErrorMessage);
             CollectionAssert.AreEqual(
-                new [] {"Alter Sirksfelder Weg 10, 23881 Koberg, Germany"}, 
+                new[] { "Alter Sirksfelder Weg 10, 23881 Koberg, Germany" },
                 result.DestinationAddresses);
             CollectionAssert.AreEqual(
                 new[] { "St2154 18, 92726 Waidhaus, Germany" },
@@ -167,7 +166,7 @@
             {
                 ApiKey = ApiKey,
                 Mode = DistanceMatrixTravelModes.driving,
-                TransitModes = new DistanceMatrixTransitModes[] { DistanceMatrixTransitModes.bus, DistanceMatrixTransitModes.subway},
+                TransitModes = new DistanceMatrixTransitModes[] { DistanceMatrixTransitModes.bus, DistanceMatrixTransitModes.subway },
                 Origins = new[] { "49.64265,12.50088" },
                 Destinations = new[] { "53.64308,10.52726" },
             };

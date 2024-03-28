@@ -86,7 +86,7 @@ namespace GoogleMapsApi
 
                 throw new HttpRequestException($"Failed with HttpResponse: {httpResponse.StatusCode} and message: {httpResponse.ReasonPhrase}");
             }
-                
+
             return httpResponse;
         }
     }

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using GoogleMapsApi.Entities.Common;
+using System;
 using System.Globalization;
-using GoogleMapsApi.Entities.Common;
 
 namespace GoogleMapsApi.Entities.PlacesText.Request
 {
@@ -35,7 +35,7 @@ namespace GoogleMapsApi.Entities.PlacesText.Request
             QueryStringParametersList parameters = base.GetQueryStringParameters();
 
             parameters.Add("query", Query);
-            
+
 
             if (Location != null) parameters.Add("location", Location.ToString());
             if (Radius != null) parameters.Add("radius", Radius.Value.ToString(CultureInfo.InvariantCulture));

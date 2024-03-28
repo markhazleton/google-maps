@@ -1,5 +1,4 @@
 ﻿using System.Runtime.Serialization;
-using GoogleMapsApi.Entities.Common;
 
 namespace GoogleMapsApi.Entities.PlaceAutocomplete.Response
 {

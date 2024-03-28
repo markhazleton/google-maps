@@ -74,7 +74,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
 
             //get the second page of results. Delay request by 2 seconds
             //Google API requires a short processing window to develop the second page. See Google API docs for more info on delay.
-            
+
             Thread.Sleep(2000);
             request = new PlacesNearByRequest
             {

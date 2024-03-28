@@ -1,14 +1,10 @@
 ﻿namespace GoogleMapsApi.Entities.DistanceMatrix.Request
 {
-    using System;
-    using System.Globalization;
 
     using Common;
 
-    using GoogleMapsApi.Entities.DistanceMatrix.Request;
+    using System;
     using System.Linq;
-
-    using GoogleMapsApi.Engine;
 
     public class DistanceMatrixRequest : SignableRequest
     {

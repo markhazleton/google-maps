@@ -3,8 +3,8 @@ using System.Runtime.Serialization;
 
 namespace GoogleMapsApi.Entities.Directions.Response
 {
-	[DataContract(Name = "vehicle")]
-	public class Vehicle
+    [DataContract(Name = "vehicle")]
+    public class Vehicle
     {
         /// <summary>
         /// Contains the name of the vehicle on this line. eg. "Subway."
@@ -27,11 +27,11 @@ namespace GoogleMapsApi.Entities.Directions.Response
 		/// </summary>
 		public VehicleType VehicleType { get; set; }
 
-		/// <summary>
-		/// Contains the URL for an icon associated with this vehicle type.
-		/// </summary>
-		[DataMember(Name = "icon")]
-		public string Icon { get; set; }
+        /// <summary>
+        /// Contains the URL for an icon associated with this vehicle type.
+        /// </summary>
+        [DataMember(Name = "icon")]
+        public string Icon { get; set; }
 
         /// <summary>
         /// Contains the URL for a localized icon associated with this vehicle type.

@@ -10,6 +10,6 @@ namespace GoogleMapsApi.Entities.PlacesRadar.Response
     public class Geometry
     {
         [DataMember(Name = "location")]
-        public Location Location { get; set; } 
+        public Location Location { get; set; }
     }
 }

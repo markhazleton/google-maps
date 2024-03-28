@@ -15,13 +15,23 @@ namespace GoogleMapsApi.Test.IntegrationTests
 
         public BaseTestIntegration()
         {
+            // Update to use UserSecrets
+
             Configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", false, true)
+                .AddUserSecrets<BaseTestIntegration>()
                 .AddEnvironmentVariables()
                 .Build();
         }
-
-        protected string ApiKey => Configuration.GetValue<string>("GOOGLE_API_KEY");
+        // Add check for null api and throw exception
+        protected string ApiKey
+        {
+            get
+            {
+                var apiKey = Configuration.GetValue<string>("GOOGLE_API_KEY");
+                return apiKey;
+            }
+        }
     }
 }

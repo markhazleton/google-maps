@@ -1,15 +1,15 @@
-﻿using System.Linq;
-using GoogleMapsApi.Entities.Common;
+﻿using GoogleMapsApi.Entities.Common;
 using GoogleMapsApi.Entities.PlacesDetails.Request;
 using GoogleMapsApi.Entities.PlacesDetails.Response;
-using NUnit.Framework;
 using GoogleMapsApi.Test.Utils;
+using NUnit.Framework;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GoogleMapsApi.Test.IntegrationTests
 {
     [TestFixture]
-    public class PlacesDetailsTests  : BaseTestIntegration
+    public class PlacesDetailsTests : BaseTestIntegration
     {
         [Test]
         public async Task ReturnsPhotos()
@@ -74,7 +74,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
-            
+
             // commented out because seems like google doesn't have opening hours for this place anymore
             /*
             Assert.AreEqual(7, result.Result.OpeningHours.Periods.Count());

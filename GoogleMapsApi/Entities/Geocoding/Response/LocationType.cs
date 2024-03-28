@@ -2,9 +2,9 @@
 
 namespace GoogleMapsApi.Entities.Geocoding.Response
 {
-	[DataContract]
-	public enum GeocodeLocationType
-	{
+    [DataContract]
+    public enum GeocodeLocationType
+    {
         /// <summary>
         /// Indicates that the returned result is a precise geocode for which we have location information accurate down to street address precision.
         /// </summary>
@@ -28,5 +28,5 @@ namespace GoogleMapsApi.Entities.Geocoding.Response
         /// </summary>
         [EnumMember]
         APPROXIMATE
-	}
+    }
 }
