@@ -15,7 +15,7 @@ namespace GoogleMapsApi.StaticMaps
     {
         protected static readonly string BaseUrl;
 
-        private static readonly int[] ValidScales = { 1, 2, 4 };
+        private static readonly int[] ValidScales = [1, 2, 4];
 
         static StaticMapsEngine()
         {

@@ -19,8 +19,8 @@
             var request = new DistanceMatrixRequest
             {
                 ApiKey = ApiKey,
-                Origins = new[] { "49.64265,12.50088" },
-                Destinations = new[] { "53.64308,10.52726" }
+                Origins = ["49.64265,12.50088"],
+                Destinations = ["53.64308,10.52726"]
             };
 
             var result = await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService);
@@ -44,8 +44,8 @@
             var request = new DistanceMatrixRequest
             {
                 ApiKey = ApiKey,
-                Origins = new[] { "49.64265,12.50088", "49.17395,12.87028" },
-                Destinations = new[] { "53.64308,10.52726" }
+                Origins = ["49.64265,12.50088", "49.17395,12.87028"],
+                Destinations = ["53.64308,10.52726"]
             };
 
             var result = await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService);
@@ -70,8 +70,8 @@
             {
                 ApiKey = ApiKey,
                 DepartureTime = new Time(),
-                Origins = new[] { "49.64265,12.50088" },
-                Destinations = new[] { "53.64308,10.52726" },
+                Origins = ["49.64265,12.50088"],
+                Destinations = ["53.64308,10.52726"],
             };
 
             var result = await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService);
@@ -91,8 +91,8 @@
                 DepartureTime = new Time(),
                 ArrivalTime = new Time(),
                 Mode = DistanceMatrixTravelModes.transit,
-                Origins = new[] { "49.64265,12.50088" },
-                Destinations = new[] { "53.64308,10.52726" },
+                Origins = ["49.64265,12.50088"],
+                Destinations = ["53.64308,10.52726"],
             };
 
             Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
@@ -106,8 +106,8 @@
                 ApiKey = ApiKey,
                 ArrivalTime = new Time(),
                 Mode = DistanceMatrixTravelModes.driving,
-                Origins = new[] { "49.64265,12.50088" },
-                Destinations = new[] { "53.64308,10.52726" },
+                Origins = ["49.64265,12.50088"],
+                Destinations = ["53.64308,10.52726"],
             };
 
             Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
@@ -121,8 +121,8 @@
                 ApiKey = ApiKey,
                 Mode = DistanceMatrixTravelModes.driving,
                 TransitRoutingPreference = DistanceMatrixTransitRoutingPreferences.less_walking,
-                Origins = new[] { "49.64265,12.50088" },
-                Destinations = new[] { "53.64308,10.52726" },
+                Origins = ["49.64265,12.50088"],
+                Destinations = ["53.64308,10.52726"],
             };
 
             Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
@@ -137,8 +137,8 @@
                 Mode = DistanceMatrixTravelModes.transit,
                 DepartureTime = new Time(),
                 TrafficModel = DistanceMatrixTrafficModels.optimistic,
-                Origins = new[] { "49.64265,12.50088" },
-                Destinations = new[] { "53.64308,10.52726" },
+                Origins = ["49.64265,12.50088"],
+                Destinations = ["53.64308,10.52726"],
             };
 
             Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
@@ -152,8 +152,8 @@
                 ApiKey = ApiKey,
                 Mode = DistanceMatrixTravelModes.driving,
                 TrafficModel = DistanceMatrixTrafficModels.optimistic,
-                Origins = new[] { "49.64265,12.50088" },
-                Destinations = new[] { "53.64308,10.52726" },
+                Origins = ["49.64265,12.50088"],
+                Destinations = ["53.64308,10.52726"],
             };
 
             Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
@@ -166,9 +166,9 @@
             {
                 ApiKey = ApiKey,
                 Mode = DistanceMatrixTravelModes.driving,
-                TransitModes = new DistanceMatrixTransitModes[] { DistanceMatrixTransitModes.bus, DistanceMatrixTransitModes.subway },
-                Origins = new[] { "49.64265,12.50088" },
-                Destinations = new[] { "53.64308,10.52726" },
+                TransitModes = [DistanceMatrixTransitModes.bus, DistanceMatrixTransitModes.subway],
+                Origins = ["49.64265,12.50088"],
+                Destinations = ["53.64308,10.52726"],
             };
 
             Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
@@ -181,8 +181,8 @@
             {
                 ApiKey = ApiKey,
                 Units = DistanceMatrixUnitSystems.imperial,
-                Origins = new[] { "49.64265,12.50088" },
-                Destinations = new[] { "53.64308,10.52726" },
+                Origins = ["49.64265,12.50088"],
+                Destinations = ["53.64308,10.52726"],
             };
 
             var result = await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService);
@@ -197,8 +197,8 @@
             var request = new DistanceMatrixRequest
             {
                 ApiKey = ApiKey,
-                Origins = new[] { "placeholder" },
-                Destinations = new[] { "3,4" },
+                Origins = ["placeholder"],
+                Destinations = ["3,4"],
             };
 
             static Uri onUriCreated(Uri uri)
@@ -231,8 +231,8 @@
             var request = new DistanceMatrixRequest
             {
                 ApiKey = ApiKey,
-                Origins = new[] { "placeholder" },
-                Destinations = new[] { "3,4" },
+                Origins = ["placeholder"],
+                Destinations = ["3,4"],
             };
 
             var rawData = Array.Empty<byte>();

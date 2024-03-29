@@ -1,6 +1,6 @@
 using GoogleMapsApi.Engine;
 using GoogleMapsApi.Entities.Common;
-using GoogleMapsApi.HttpClientUtility;
+using HttpClientUtility;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

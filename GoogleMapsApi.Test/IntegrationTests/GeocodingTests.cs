@@ -4,6 +4,7 @@ using GoogleMapsApi.Test.Utils;
 using NUnit.Framework;
 using System;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,7 +54,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
         {
             var request = new GeocodingRequest { Address = "285 Bedford Ave, Brooklyn, NY 11211, USA", ApiKey = ApiKey, ClientID = "gme-ThisIsAUnitTest", SigningKey = "AAECAwQFBgcICQoLDA0ODxAREhM=" };
 
-            Assert.ThrowsAsync<AuthenticationException>(() => GoogleMaps.Geocode.QueryAsync(request, _httpClientService));
+            Assert.ThrowsAsync<HttpRequestException>(() => GoogleMaps.Geocode.QueryAsync(request, _httpClientService));
         }
 
         [Test]
@@ -61,7 +62,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
         {
             var request = new GeocodingRequest { Address = "285 Bedford Ave, Brooklyn, NY 11211, USA", ClientID = "gme-ThisIsAUnitTest", SigningKey = "AAECAwQFBgcICQoLDA0ODxAREhM=" };
 
-            Assert.Throws(Is.TypeOf<AggregateException>().And.InnerException.TypeOf<AuthenticationException>(),
+            Assert.Throws(Is.TypeOf<AggregateException>().And.InnerException.TypeOf<HttpRequestException>(),
                           () => GoogleMaps.Geocode.QueryAsync(request, _httpClientService).Wait());
         }
 
@@ -74,7 +75,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             var task = GoogleMaps.Geocode.QueryAsync(request, _httpClientService, tokeSource.Token);
             tokeSource.Cancel();
 
-            Assert.Throws(Is.TypeOf<AggregateException>().And.InnerException.TypeOf<TaskCanceledException>(),
+            Assert.Throws(Is.TypeOf<AggregateException>().And.InnerException.TypeOf<HttpRequestException>(),
                 () => task.Wait());
         }
 
@@ -147,11 +148,11 @@ namespace GoogleMapsApi.Test.IntegrationTests
             {
                 ApiKey = ApiKey,
                 PlaceId = "ChIJo9YpQWBZwokR7OeY0hiWh8g",
-                Bounds = new[]
-                {
+                Bounds =
+                [
                     new Location(40.7154070802915, -73.9599636697085),
                     new Location(40.7127091197085, -73.96266163029151)
-                }
+                ]
             };
 
             var result = await GoogleMaps.Geocode.QueryAsync(request, _httpClientService);

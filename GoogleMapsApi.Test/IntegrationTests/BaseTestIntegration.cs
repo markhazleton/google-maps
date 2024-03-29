@@ -1,4 +1,4 @@
-﻿using GoogleMapsApi.HttpClientUtility;
+﻿using HttpClientUtility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;

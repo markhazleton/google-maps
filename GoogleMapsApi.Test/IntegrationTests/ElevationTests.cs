@@ -16,7 +16,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             var request = new ElevationRequest
             {
                 ApiKey = ApiKey,
-                Locations = new[] { new Location(40.7141289, -73.9614074) }
+                Locations = [new Location(40.7141289, -73.9614074)]
             };
 
             var result = await GoogleMaps.Elevation.QueryAsync(request, _httpClientService);
@@ -32,7 +32,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             var request = new ElevationRequest
             {
                 ApiKey = ApiKey,
-                Locations = new[] { new Location(40.7141289, -73.9614074) }
+                Locations = [new Location(40.7141289, -73.9614074)]
             };
 
             var result = GoogleMaps.Elevation.QueryAsync(request, _httpClientService).Result;

@@ -43,7 +43,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             Assert.AreEqual(Status.NOT_FOUND, result.Status);
         }
 
-        readonly PriceLevel[] anyPriceLevel = new PriceLevel[] { PriceLevel.Free, PriceLevel.Inexpensive, PriceLevel.Moderate, PriceLevel.Expensive, PriceLevel.VeryExpensive };
+        readonly PriceLevel[] anyPriceLevel = [PriceLevel.Free, PriceLevel.Inexpensive, PriceLevel.Moderate, PriceLevel.Expensive, PriceLevel.VeryExpensive];
 
         [Test]
         public async Task ReturnsStronglyTypedPriceLevel()
