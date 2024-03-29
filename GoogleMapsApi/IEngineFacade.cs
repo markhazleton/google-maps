@@ -1,13 +1,13 @@
+using GoogleMapsApi.Engine;
 using GoogleMapsApi.Entities.Common;
+using GoogleMapsApi.HttpClientUtility;
 using System;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace GoogleMapsApi
 {
-    using Engine;
-    using Newtonsoft.Json.Linq;
-    using System.Net.Http;
 
     public interface IEngineFacade<in TRequest, TResponse>
         where TRequest : MapsBaseRequest, new()
@@ -21,7 +21,7 @@ namespace GoogleMapsApi
         /// <summary>
         /// Occurs when raw data from Google API recivied.
         /// </summary>
-        event RawResponseReciviedDelegate OnRawResponseRecivied;
+        event RawResponseReceivedDelegate OnRawResponseRecivied;
 
         /// <summary>
         /// Asynchronously query the Google Maps API using the provided request.
@@ -30,7 +30,7 @@ namespace GoogleMapsApi
         /// <param name="client">The HttpClient that will be used to send the request.</param>
         /// <returns>A Task with the future value of the response.</returns>
         /// <exception cref="ArgumentNullException">Thrown when a null value is passed to the request parameter.</exception>
-        Task<TResponse> QueryAsync(TRequest request,HttpClient client, CancellationToken token = default);
+        Task<TResponse> QueryAsync(TRequest request, IHttpClientService service, CancellationToken token = default);
 
         /// <summary>
         /// Asynchronously query the Google Maps API using the provided request.
@@ -42,6 +42,6 @@ namespace GoogleMapsApi
         /// <returns>A Task with the future value of the response.</returns>
         /// <exception cref="ArgumentNullException">Thrown when a null value is passed to the request parameter.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the value of timeout is neither a positive value or infinite.</exception>
-        Task<TResponse> QueryAsync(TRequest request, HttpClient client, TimeSpan timeout,CancellationToken token = default);
+        Task<TResponse> QueryAsync(TRequest request, IHttpClientService service, TimeSpan timeout, CancellationToken token = default);
     }
 }

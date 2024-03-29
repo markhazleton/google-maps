@@ -1,7 +1,7 @@
 using GoogleMapsApi.Engine;
 using GoogleMapsApi.Entities.Common;
+using GoogleMapsApi.HttpClientUtility;
 using System;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,15 +10,20 @@ namespace GoogleMapsApi
     /// <summary>
     /// A public-surface API that exposes the Google Maps API functionality.
     /// </summary>
-    /// <typeparam name="TRequest"></typeparam>
-    /// <typeparam name="TResponse"></typeparam>
+    /// <typeparam name="TRequest">Type of the request.</typeparam>
+    /// <typeparam name="TResponse">Type of the response.</typeparam>
     public class EngineFacade<TRequest, TResponse> : IEngineFacade<TRequest, TResponse>
         where TRequest : MapsBaseRequest, new()
         where TResponse : IResponseFor<TRequest>
     {
         internal static readonly EngineFacade<TRequest, TResponse> Instance = new();
 
-        private EngineFacade() { }
+        private readonly MapsEngine<TRequest, TResponse> _mapsEngine;
+
+        private EngineFacade()
+        {
+            _mapsEngine = new MapsEngine<TRequest, TResponse>();
+        }
 
         /// <summary>
         /// Occurs when the Url created. Can be used for override the Url.
@@ -27,35 +32,37 @@ namespace GoogleMapsApi
         {
             add
             {
-                MapsAPIGenericEngine<TRequest, TResponse>.OnUriCreated += value;
+                _mapsEngine.OnUriCreated += value;
             }
             remove
             {
-                MapsAPIGenericEngine<TRequest, TResponse>.OnUriCreated -= value;
+                _mapsEngine.OnUriCreated -= value;
             }
         }
 
         /// <summary>
-        /// Occurs when raw data from Google API recivied.
+        /// Occurs when raw data from Google API received.
         /// </summary>
-        public event RawResponseReciviedDelegate OnRawResponseRecivied
+        public event RawResponseReceivedDelegate OnRawResponseRecivied
         {
             add
             {
-                MapsAPIGenericEngine<TRequest, TResponse>.OnRawResponseRecivied += value;
+                _mapsEngine.OnRawResponseRecivied += value;
             }
             remove
             {
-                MapsAPIGenericEngine<TRequest, TResponse>.OnRawResponseRecivied -= value;
+                _mapsEngine.OnRawResponseRecivied -= value;
             }
         }
-        public Task<TResponse> QueryAsync(TRequest request, HttpClient client, TimeSpan timeout, CancellationToken token = default)
+
+        public Task<TResponse> QueryAsync(TRequest request, IHttpClientService service, CancellationToken token = default)
         {
-            return MapsAPIGenericEngine<TRequest, TResponse>.QueryGoogleAPIAsync(request, client, timeout, token);
+            return _mapsEngine.QueryGoogleAPIAsync(request, service, token);
         }
-        public Task<TResponse> QueryAsync(TRequest request, HttpClient client, CancellationToken token = default)
+
+        public Task<TResponse> QueryAsync(TRequest request, IHttpClientService service, TimeSpan timeout, CancellationToken token = default)
         {
-            return MapsAPIGenericEngine<TRequest, TResponse>.QueryGoogleAPIAsync(request, client, TimeSpan.FromMilliseconds(Timeout.Infinite), token);
+            return _mapsEngine.QueryGoogleAPIAsync(request, service,timeout, token);
         }
     }
 }

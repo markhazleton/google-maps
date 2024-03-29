@@ -1,5 +1,6 @@
 using GoogleMapsApi;
 using GoogleMapsApi.Api;
+using GoogleMapsApi.HttpClientUtility;
 using Serilog;
 using Serilog.Extensions.Logging;
 using System.Reflection;
@@ -25,8 +26,9 @@ builder.Configuration
 
 // Register HttpClientFactory
 builder.Services.AddHttpClient();
+builder.Services.AddSingleton<IStringConverter, NewtonsoftJsonStringConverter>();
+builder.Services.AddTransient<IHttpClientService, HttpClientService>();
 builder.Services.AddSingleton<IMapsService, GoogleMapsServiceApi>();
-
 
 var app = builder.Build();
 

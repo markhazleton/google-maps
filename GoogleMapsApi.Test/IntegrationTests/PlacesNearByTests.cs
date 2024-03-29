@@ -24,7 +24,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Location = new Location(47.611162, -122.337644), //Seattle, Washington, USA
             };
 
-            PlacesNearByResponse result = await GoogleMaps.PlacesNearBy.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
+            PlacesNearByResponse result = await GoogleMaps.PlacesNearBy.QueryAsync(request, _httpClientService);
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -43,7 +43,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Type = "airport",
             };
 
-            PlacesNearByResponse result = await GoogleMaps.PlacesNearBy.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
+            PlacesNearByResponse result = await GoogleMaps.PlacesNearBy.QueryAsync(request, _httpClientService);
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -62,7 +62,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Location = new Location(47.611162, -122.337644), //Seattle, Washington, USA
             };
 
-            PlacesNearByResponse result = await GoogleMaps.PlacesNearBy.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
+            PlacesNearByResponse result = await GoogleMaps.PlacesNearBy.QueryAsync(request, _httpClientService);
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -84,7 +84,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Location = new Location(47.611162, -122.337644), //Seattle, Washington, USA
                 PageToken = result.NextPage
             };
-            result = await GoogleMaps.PlacesNearBy.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
+            result = await GoogleMaps.PlacesNearBy.QueryAsync(request, _httpClientService);
             Assert.AreEqual(GoogleMapsApi.Entities.PlacesNearBy.Response.Status.OK, result.Status);
             //make sure the second page has some results
             Assert.IsTrue(result.Results != null && result.Results.Any());

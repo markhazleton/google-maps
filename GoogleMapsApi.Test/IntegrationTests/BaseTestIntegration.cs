@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using GoogleMapsApi.HttpClientUtility;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
 using System.Net.Http;
@@ -15,7 +16,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
     {
         private readonly IConfigurationRoot Configuration;
         protected readonly IHttpClientFactory _httpClientFactory;
-
+        protected readonly IHttpClientService _httpClientService;
 
         public BaseTestIntegration()
         {
@@ -30,6 +31,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             services.AddHttpClient();
             var serviceProvider = services.BuildServiceProvider();
             _httpClientFactory = serviceProvider.GetService<IHttpClientFactory>();
+            _httpClientService = new HttpClientService(_httpClientFactory, new NewtonsoftJsonStringConverter());
 
         }
         // Add check for null api and throw exception

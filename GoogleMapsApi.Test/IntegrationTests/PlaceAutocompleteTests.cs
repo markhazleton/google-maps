@@ -22,7 +22,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Radius = 30000
             };
 
-            PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
+            PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request, _httpClientService);
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.ZERO_RESULTS, result.Status);
@@ -39,7 +39,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Radius = 30000
             };
 
-            PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
+            PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request, _httpClientService);
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.ZERO_RESULTS, result.Status, "results for jibberish");
@@ -52,7 +52,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Location = new Entities.Common.Location(53.4635332, -2.2419169)
             };
 
-            PlaceAutocompleteResponse offsetResult = await GoogleMaps.PlaceAutocomplete.QueryAsync(offsetRequest, _httpClientFactory.CreateClient("GoogleAPI"));
+            PlaceAutocompleteResponse offsetResult = await GoogleMaps.PlaceAutocomplete.QueryAsync(offsetRequest, _httpClientService);
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, offsetResult.Status, "results using offset");
         }
@@ -69,7 +69,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Radius = 30000
             };
 
-            PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
+            PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request, _httpClientService);
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -94,7 +94,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Radius = 30000
             };
 
-            PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
+            PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request, _httpClientService);
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreNotEqual(Status.ZERO_RESULTS, result.Status);
@@ -106,7 +106,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
         public async Task CheckZeroRadius()
         {
             var request = CreatePlaceAutocompleteRequest("RIX", 0);
-            PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
+            PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request, _httpClientService);
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreNotEqual(Status.ZERO_RESULTS, result.Status);
         }
@@ -114,7 +114,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
         public async Task CheckNegativeRadius()
         {
             var request = CreatePlaceAutocompleteRequest("RIX", -1);
-            PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
+            PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request, _httpClientService);
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreNotEqual(Status.ZERO_RESULTS, result.Status);
         }
@@ -123,7 +123,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
         public async Task CheckLargerThenEarthRadius()
         {
             var request = CreatePlaceAutocompleteRequest("RIX", 30000000);
-            PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
+            PlaceAutocompleteResponse result = await GoogleMaps.PlaceAutocomplete.QueryAsync(request, _httpClientService);
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreNotEqual(Status.ZERO_RESULTS, result.Status);
         }

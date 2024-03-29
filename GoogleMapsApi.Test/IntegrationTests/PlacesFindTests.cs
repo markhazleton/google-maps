@@ -21,7 +21,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 InputType = InputType.TextQuery
             };
 
-            PlacesFindResponse result = await GoogleMaps.PlacesFind.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
+            PlacesFindResponse result = await GoogleMaps.PlacesFind.QueryAsync(request, _httpClientService);
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -39,7 +39,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Fields = "place_id"
             };
 
-            PlacesFindResponse result = await GoogleMaps.PlacesFind.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
+            PlacesFindResponse result = await GoogleMaps.PlacesFind.QueryAsync(request, _httpClientService);
 
             //FormattedAddress should be null since it wasn't requested
             Assert.IsNotEmpty(result.Candidates);

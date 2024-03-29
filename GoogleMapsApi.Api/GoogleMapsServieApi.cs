@@ -1,6 +1,7 @@
 ﻿using GoogleMapsApi.Entities.Common;
 using GoogleMapsApi.Entities.Geocoding.Request;
 using GoogleMapsApi.Entities.Geocoding.Response;
+using GoogleMapsApi.HttpClientUtility;
 
 namespace GoogleMapsApi.Api;
 
@@ -9,21 +10,21 @@ namespace GoogleMapsApi.Api;
 /// </summary>
 public class GoogleMapsServiceApi : IMapsService
 {
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IHttpClientService _httpClientService;
     private readonly string apiKey;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GoogleMapsServiceApi"/> class.
     /// </summary>
-    /// <param name="httpClientFactory">The factory to create instances of <see cref="HttpClient"/>.</param>
+    /// <param name="httpClientService">The factory to create instances of <see cref="HttpClient"/>.</param>
     /// <param name="configuration">The application configuration to access Google Maps API key.</param>
-    public GoogleMapsServiceApi(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+    public GoogleMapsServiceApi(IHttpClientService httpClientService, IConfiguration configuration)
     {
         // Retrieve the Google Maps API key from configuration.
         // Fallback to "not found" if the key is not present.
         apiKey = configuration.GetValue<string>("GOOGLE_API_KEY") ?? "not found";
 
-        _httpClientFactory = httpClientFactory;
+        _httpClientService = httpClientService;
     }
 
     /// <summary>
@@ -42,7 +43,7 @@ public class GoogleMapsServiceApi : IMapsService
         };
 
         // Execute the geocoding query using the Google Maps service and return the response.
-        return await GoogleMaps.Geocode.QueryAsync(request, _httpClientFactory.CreateClient());
+        return await GoogleMaps.Geocode.QueryAsync(request, _httpClientService);
     }
 
     /// <summary>
@@ -60,7 +61,7 @@ public class GoogleMapsServiceApi : IMapsService
         };
 
         // Execute the geocoding query using the Google Maps service and return the response.
-        return await GoogleMaps.Geocode.QueryAsync(request, _httpClientFactory.CreateClient());
+        return await GoogleMaps.Geocode.QueryAsync(request, _httpClientService);
     }
 }
 
