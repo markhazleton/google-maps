@@ -19,7 +19,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Locations = new[] { new Location(40.7141289, -73.9614074) }
             };
 
-            var result = await GoogleMaps.Elevation.QueryAsync(request);
+            var result = await GoogleMaps.Elevation.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Entities.Elevation.Response.Status.OK, result.Status);
@@ -35,7 +35,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Locations = new[] { new Location(40.7141289, -73.9614074) }
             };
 
-            var result = GoogleMaps.Elevation.QueryAsync(request).Result;
+            var result = GoogleMaps.Elevation.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI")).Result;
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Entities.Elevation.Response.Status.OK, result.Status);

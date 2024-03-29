@@ -18,21 +18,15 @@ namespace GoogleMapsApi.Engine
         internal static event RawResponseReciviedDelegate OnRawResponseRecivied;
         internal static TimeSpan DefaultTimeout = TimeSpan.FromSeconds(100);
 
-        protected internal static async Task<TResponse> QueryGoogleAPIAsync(TRequest request, TimeSpan timeout, CancellationToken token = default)
+        protected internal static async Task<TResponse> QueryGoogleAPIAsync(TRequest request, HttpClient client, TimeSpan timeout, CancellationToken token = default)
         {
-            if (request == null)
-                throw new ArgumentNullException(nameof(request));
-
+            ArgumentNullException.ThrowIfNull(request);
             var uri = request.GetUri();
             if (OnUriCreated != null)
             {
                 uri = OnUriCreated(uri);
             }
-
-            var client = new HttpClient();
-
             var response = await client.DownloadDataTaskAsyncAsString(uri, timeout, token).ConfigureAwait(false);
-
             return JsonConvert.DeserializeObject<TResponse>(response);
         }
 

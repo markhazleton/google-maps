@@ -24,7 +24,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Location = new Location(47.611162, -122.337644), //Seattle, Washington, USA
             };
 
-            PlacesResponse result = await GoogleMaps.Places.QueryAsync(request);
+            PlacesResponse result = await GoogleMaps.Places.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -43,7 +43,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Type = "airport"
             };
 
-            PlacesResponse result = await GoogleMaps.Places.QueryAsync(request);
+            PlacesResponse result = await GoogleMaps.Places.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -62,7 +62,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Location = new Location(47.611162, -122.337644), //Seattle, Washington, USA
             };
 
-            PlacesResponse result = await GoogleMaps.Places.QueryAsync(request);
+            PlacesResponse result = await GoogleMaps.Places.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -84,7 +84,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Location = new Location(47.611162, -122.337644), //Seattle, Washington, USA
                 PageToken = result.NextPage
             };
-            result = await GoogleMaps.Places.QueryAsync(request);
+            result = await GoogleMaps.Places.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);

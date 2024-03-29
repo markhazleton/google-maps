@@ -23,7 +23,7 @@
                 Destinations = new[] { "53.64308,10.52726" }
             };
 
-            var result = await GoogleMaps.DistanceMatrix.QueryAsync(request);
+            var result = await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(DistanceMatrixStatusCodes.OK, result.Status, result.ErrorMessage);
@@ -48,7 +48,7 @@
                 Destinations = new[] { "53.64308,10.52726" }
             };
 
-            var result = await GoogleMaps.DistanceMatrix.QueryAsync(request);
+            var result = await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(DistanceMatrixStatusCodes.OK, result.Status, result.ErrorMessage);
@@ -74,7 +74,7 @@
                 Destinations = new[] { "53.64308,10.52726" },
             };
 
-            var result = await GoogleMaps.DistanceMatrix.QueryAsync(request);
+            var result = await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(DistanceMatrixStatusCodes.OK, result.Status, result.ErrorMessage);
@@ -95,7 +95,7 @@
                 Destinations = new[] { "53.64308,10.52726" },
             };
 
-            Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request));
+            Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI")));
         }
 
         [Test]
@@ -110,7 +110,7 @@
                 Destinations = new[] { "53.64308,10.52726" },
             };
 
-            Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request));
+            Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI")));
         }
 
         [Test]
@@ -125,7 +125,7 @@
                 Destinations = new[] { "53.64308,10.52726" },
             };
 
-            Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request));
+            Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI")));
         }
 
         [Test]
@@ -141,7 +141,7 @@
                 Destinations = new[] { "53.64308,10.52726" },
             };
 
-            Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request));
+            Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI")));
         }
 
         [Test]
@@ -156,7 +156,7 @@
                 Destinations = new[] { "53.64308,10.52726" },
             };
 
-            Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request));
+            Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI")));
         }
 
         [Test]
@@ -171,7 +171,7 @@
                 Destinations = new[] { "53.64308,10.52726" },
             };
 
-            Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request));
+            Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI")));
         }
 
         [Test]
@@ -185,7 +185,7 @@
                 Destinations = new[] { "53.64308,10.52726" },
             };
 
-            var result = await GoogleMaps.DistanceMatrix.QueryAsync(request);
+            var result = await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.True(result.Rows.First().Elements.First().Distance.Text.Contains("mi"));
@@ -212,7 +212,7 @@
 
             try
             {
-                var result = await GoogleMaps.DistanceMatrix.QueryAsync(request);
+                var result = await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
                 AssertInconclusive.NotExceedQuota(result);
                 Assert.AreEqual(DistanceMatrixStatusCodes.OK, result.Status, result.ErrorMessage);
@@ -242,7 +242,7 @@
 
             try
             {
-                var result = await GoogleMaps.DistanceMatrix.QueryAsync(request);
+                var result = await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
                 AssertInconclusive.NotExceedQuota(result);
                 Assert.AreEqual(DistanceMatrixStatusCodes.OK, result.Status, result.ErrorMessage);

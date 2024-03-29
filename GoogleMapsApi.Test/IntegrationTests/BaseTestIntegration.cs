@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System.IO;
+using System.Net.Http;
 
 namespace GoogleMapsApi.Test.IntegrationTests
 {
@@ -12,17 +14,23 @@ namespace GoogleMapsApi.Test.IntegrationTests
     public class BaseTestIntegration
     {
         private readonly IConfigurationRoot Configuration;
+        protected readonly IHttpClientFactory _httpClientFactory;
+
 
         public BaseTestIntegration()
         {
-            // Update to use UserSecrets
-
             Configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", false, true)
                 .AddUserSecrets<BaseTestIntegration>()
                 .AddEnvironmentVariables()
                 .Build();
+
+            var services = new ServiceCollection();
+            services.AddHttpClient();
+            var serviceProvider = services.BuildServiceProvider();
+            _httpClientFactory = serviceProvider.GetService<IHttpClientFactory>();
+
         }
         // Add check for null api and throw exception
         protected string ApiKey

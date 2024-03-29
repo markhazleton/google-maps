@@ -20,7 +20,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 PlaceId = "ChIJZ3VuVMQdLz4REP9PWpQ4SIY"
             };
 
-            PlacesDetailsResponse result = await GoogleMaps.PlacesDetails.QueryAsync(request);
+            PlacesDetailsResponse result = await GoogleMaps.PlacesDetails.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -37,7 +37,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 PlaceId = "ChIJbWWgrQAVkFQReAwrXXWzlYs"
             };
 
-            PlacesDetailsResponse result = await GoogleMaps.PlacesDetails.QueryAsync(request);
+            PlacesDetailsResponse result = await GoogleMaps.PlacesDetails.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.NOT_FOUND, result.Status);
@@ -54,7 +54,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 PlaceId = await GetMyPlaceId(),
             };
 
-            PlacesDetailsResponse result = await GoogleMaps.PlacesDetails.QueryAsync(request);
+            PlacesDetailsResponse result = await GoogleMaps.PlacesDetails.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -70,7 +70,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 PlaceId = await GetMyPlaceId(),
             };
 
-            PlacesDetailsResponse result = await GoogleMaps.PlacesDetails.QueryAsync(request);
+            PlacesDetailsResponse result = await GoogleMaps.PlacesDetails.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -99,7 +99,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                     Location = new Location(-31.954453, 115.862717),
                     RankBy = Entities.Places.Request.RankBy.Distance,
                 };
-                var result = await GoogleMaps.Places.QueryAsync(request);
+                var result = await GoogleMaps.Places.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
                 AssertInconclusive.NotExceedQuota(result);
                 cachedMyPlaceId = result.Results.First().PlaceId;
             }

@@ -23,7 +23,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Address = "285 Bedford Ave, Brooklyn, NY 11211, USA"
             };
 
-            var result = await GoogleMaps.Geocode.QueryAsync(request);
+            var result = await GoogleMaps.Geocode.QueryAsync(request, _httpClientFactory.CreateClient("GoogleApi"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -40,7 +40,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Address = "285 Bedford Ave, Brooklyn, NY 11211, USA"
             };
 
-            var result = GoogleMaps.Geocode.QueryAsync(request).Result;
+            var result = GoogleMaps.Geocode.QueryAsync(request, _httpClientFactory.CreateClient("GoogleApi")).Result;
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -53,7 +53,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
         {
             var request = new GeocodingRequest { Address = "285 Bedford Ave, Brooklyn, NY 11211, USA", ApiKey = ApiKey, ClientID = "gme-ThisIsAUnitTest", SigningKey = "AAECAwQFBgcICQoLDA0ODxAREhM=" };
 
-            Assert.ThrowsAsync<AuthenticationException>(() => GoogleMaps.Geocode.QueryAsync(request));
+            Assert.ThrowsAsync<AuthenticationException>(() => GoogleMaps.Geocode.QueryAsync(request, _httpClientFactory.CreateClient("GoogleApi")));
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             var request = new GeocodingRequest { Address = "285 Bedford Ave, Brooklyn, NY 11211, USA", ClientID = "gme-ThisIsAUnitTest", SigningKey = "AAECAwQFBgcICQoLDA0ODxAREhM=" };
 
             Assert.Throws(Is.TypeOf<AggregateException>().And.InnerException.TypeOf<AuthenticationException>(),
-                          () => GoogleMaps.Geocode.QueryAsync(request).Wait());
+                          () => GoogleMaps.Geocode.QueryAsync(request, _httpClientFactory.CreateClient("GoogleApi")).Wait());
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             var request = new GeocodingRequest { Address = "285 Bedford Ave, Brooklyn, NY 11211, USA" };
 
             var tokeSource = new CancellationTokenSource();
-            var task = GoogleMaps.Geocode.QueryAsync(request, tokeSource.Token);
+            var task = GoogleMaps.Geocode.QueryAsync(request, _httpClientFactory.CreateClient("GoogleApi"), tokeSource.Token);
             tokeSource.Cancel();
 
             Assert.Throws(Is.TypeOf<AggregateException>().And.InnerException.TypeOf<TaskCanceledException>(),
@@ -85,7 +85,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             var cts = new CancellationTokenSource();
             cts.Cancel();
 
-            var task = GoogleMaps.Geocode.QueryAsync(request, cts.Token);
+            var task = GoogleMaps.Geocode.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"), cts.Token);
 
             Assert.Throws(Is.TypeOf<AggregateException>().And.InnerException.TypeOf<TaskCanceledException>(),
                             () => task.Wait());
@@ -100,7 +100,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Location = new Location(40.7141289, -73.9614074)
             };
 
-            var result = await GoogleMaps.Geocode.QueryAsync(request);
+            var result = await GoogleMaps.Geocode.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -116,7 +116,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 PlaceId = "ChIJo9YpQWBZwokR7OeY0hiWh8g"
             };
 
-            var result = await GoogleMaps.Geocode.QueryAsync(request);
+            var result = await GoogleMaps.Geocode.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -133,7 +133,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Region = "US"
             };
 
-            var result = await GoogleMaps.Geocode.QueryAsync(request);
+            var result = await GoogleMaps.Geocode.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -154,7 +154,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 }
             };
 
-            var result = await GoogleMaps.Geocode.QueryAsync(request);
+            var result = await GoogleMaps.Geocode.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -171,7 +171,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Components = new() { Country = "US" }
             };
 
-            var result = await GoogleMaps.Geocode.QueryAsync(request);
+            var result = await GoogleMaps.Geocode.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -188,7 +188,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Address = "Should be ignored"
             };
 
-            var result = await GoogleMaps.Geocode.QueryAsync(request);
+            var result = await GoogleMaps.Geocode.QueryAsync(request, _httpClientFactory.CreateClient("GoogleApi"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -204,7 +204,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Location = new Location(40.7141289, -73.9614074)
             };
 
-            var result = GoogleMaps.Geocode.QueryAsync(request).Result;
+            var result = GoogleMaps.Geocode.QueryAsync(request, _httpClientFactory.CreateClient("GoogleApi")).Result;
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);

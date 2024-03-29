@@ -1,8 +1,8 @@
 using GoogleMapsApi;
 using GoogleMapsApi.Api;
-using System.Reflection;
 using Serilog;
 using Serilog.Extensions.Logging;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +23,11 @@ builder.Configuration
     .AddUserSecrets<Program>()
     .AddEnvironmentVariables();
 
+// Register HttpClientFactory
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<IMapsService, GoogleMapsServiceApi>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,7 +39,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseMiddleware<LoggingMiddleware>();
-app.RegisterGoogleMapsAPIs();
+
+app.MapGet("/geocoding/address", async (IMapsService googleMapsService, string address) =>
+{
+    return Results.Ok(await googleMapsService.GetGeoCodingFromAddress(address));
+});
+
+app.MapGet("/geocoding/latlong", async (IMapsService googleMapsService, double latitude, double longitude) =>
+{
+    return Results.Ok(await googleMapsService.GetGeocodingFromLatLong(latitude, longitude));
+});
+
 app.Run();
 
 static void ConfigureLogging(WebApplicationBuilder builder)

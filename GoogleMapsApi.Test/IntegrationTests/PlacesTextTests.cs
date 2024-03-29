@@ -20,7 +20,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Types = "address"
             };
 
-            PlacesTextResponse result = await GoogleMaps.PlacesText.QueryAsync(request);
+            PlacesTextResponse result = await GoogleMaps.PlacesText.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -37,7 +37,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Types = "address"
             };
 
-            PlacesTextResponse result = await GoogleMaps.PlacesText.QueryAsync(request);
+            PlacesTextResponse result = await GoogleMaps.PlacesText.QueryAsync(request, _httpClientFactory.CreateClient("GoogleAPI"));
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
