@@ -5,13 +5,16 @@
     	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 
 	<AssemblyName>GoogleMapsApi</AssemblyName>
-	<Authors>Maxim Novak</Authors>
+	<Authors>Maxim Novak, Mark Hazleton</Authors>
 	<PackageLicenseUrl>https://github.com/maximn/google-maps/blob/master/LICENSE.md</PackageLicenseUrl>
 	<Description>Google Maps Web Services API wrapper for .NET</Description>
-	<Copyright>Copyright ©  2010</Copyright>
+	<Copyright>Copyright ©  2010-2024</Copyright>
 	<PackageTags>Map Geo Places Elevation Geocode Directions Maps</PackageTags>
 	<RepositoryType>git</RepositoryType>
-	<RepositoryUrl>https://github.com/maximn/google-maps</RepositoryUrl>
+	<RepositoryUrl>https://github.com/markhazleton/google-maps</RepositoryUrl>
+	<ImplicitUsings>disable</ImplicitUsings>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<Title>GogleMapsApi</Title>
   </PropertyGroup>
 	
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
