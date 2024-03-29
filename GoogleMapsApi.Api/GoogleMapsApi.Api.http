@@ -1,0 +1,7 @@
+
+
+
+GET https://localhost:7071/geocoding?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA
+Accept: application/json
+
+###
