@@ -8,209 +8,138 @@ using System.Threading.Tasks;
 namespace HttpClientUtility;
 
 /// <summary>
-/// Represents a service for making HTTP requests. This class encapsulates the functionality of an HTTP client and provides
-/// methods to perform asynchronous GET requests.
+/// Represents a service for making HTTP requests using HttpClient.
 /// </summary>
 /// <remarks>
-/// Initializes a new instance of the HttpClientService class with the specified HTTP client factory and string converter.
+/// Initializes a new instance of the HttpClientService class.
 /// </remarks>
-/// <param name="httpClientFactory">The factory to create HTTP client instances.</param>
-/// <param name="stringConverter">The converter to deserialize response strings.</param>
+/// <param name="httpClientFactory">The factory for creating HttpClient instances.</param>
+/// <param name="stringConverter">The string converter for serializing and deserializing objects.</param>
 /// <exception cref="ArgumentNullException">Thrown when httpClientFactory or stringConverter is null.</exception>
-public class HttpClientService(IHttpClientFactory httpClientFactory, HttpClientUtility.IStringConverter stringConverter) : HttpClientUtility.IHttpClientService
+public class HttpClientService(IHttpClientFactory httpClientFactory, IStringConverter stringConverter) : IHttpClientService
 {
     private readonly IHttpClientFactory _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
-    private readonly HttpClientUtility.IStringConverter _stringConverter = stringConverter ?? throw new ArgumentNullException(nameof(stringConverter));
+    private readonly IStringConverter _stringConverter = stringConverter ?? throw new ArgumentNullException(nameof(stringConverter));
     private TimeSpan? _timeout;
 
     /// <summary>
-    /// Sets the timeout for the HTTP client. If not set, defaults to 100 seconds.
+    /// Creates a configured HttpClient instance.
     /// </summary>
-    public TimeSpan Timeout
+    /// <returns>The configured HttpClient instance.</returns>
+    private HttpClient CreateConfiguredClient()
     {
-        set => _timeout = value;
+        var client = _httpClientFactory.CreateClient();
+        client.Timeout = _timeout ?? TimeSpan.FromSeconds(100);
+        return client;
     }
 
     /// <summary>
-    /// Asynchronously sends a GET request to the specified Uri and returns the response body as a type specified by T.
+    /// Executes an HTTP request asynchronously and returns the response content.
     /// </summary>
-    /// <typeparam name="T">The type to which the response body will be converted.</typeparam>
-    /// <param name="requestUri">The Uri the request is sent to.</param>
-    /// <param name="cancellationToken">Optional. The token to monitor for cancellation requests.</param>
-    /// <returns>A task that represents the asynchronous operation, containing the deserialized response.</returns>
-    public async Task<HttpResponseContent<T>> GetAsync<T>(Uri requestUri, CancellationToken cancellationToken = default)
+    /// <typeparam name="T">The type of the response content.</typeparam>
+    /// <param name="httpRequest">The function that sends the HTTP request.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>An instance of HttpResponseContent containing the response content and status code.</returns>
+    private async Task<HttpResponseContent<T>> ExecuteRequestAsync<T>(Func<Task<HttpResponseMessage>> httpRequest, CancellationToken cancellationToken)
     {
-        // Ensure a default timeout is set if none is specified
-        var client = _httpClientFactory.CreateClient();
-        client.Timeout = _timeout ?? TimeSpan.FromSeconds(100);
-
         try
         {
-            var response = await client.GetAsync(requestUri, cancellationToken);
+            var response = await httpRequest();
 
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync(cancellationToken);
                 var deserializedContent = _stringConverter.ConvertFromString<T>(content);
-                return new HttpResponseContent<T>(deserializedContent, response.StatusCode);
+                return HttpResponseContent<T>.Success(deserializedContent, response.StatusCode);
             }
             else
             {
-                // Handle non-success status codes
-                return new HttpResponseContent<T>($"Error: {response.ReasonPhrase}", response.StatusCode);
+                return HttpResponseContent<T>.Failure($"Error: {response.ReasonPhrase}", response.StatusCode);
             }
         }
         catch (HttpRequestException ex)
         {
-            // Handle known exceptions related to HTTP requests
-            return new HttpResponseContent<T>($"HTTP Request Exception: {ex.Message}", HttpStatusCode.ServiceUnavailable);
+            return HttpResponseContent<T>.Failure($"HTTP Request Exception: {ex.Message}", HttpStatusCode.ServiceUnavailable);
         }
         catch (TaskCanceledException ex)
         {
-            // Handle timeout exception
-            return new HttpResponseContent<T>($"Timeout Exception: {ex.Message}", HttpStatusCode.RequestTimeout);
+            return HttpResponseContent<T>.Failure($"Timeout Exception: {ex.Message}", HttpStatusCode.RequestTimeout);
         }
         catch (Exception ex)
         {
-            // Handle unexpected exceptions
-            return new HttpResponseContent<T>($"Unexpected Exception: {ex.Message}", HttpStatusCode.InternalServerError);
+            return HttpResponseContent<T>.Failure($"Unexpected Exception: {ex.Message}", HttpStatusCode.InternalServerError);
         }
     }
-    /// <summary>
-    /// Asynchronously sends a POST request to the specified Uri with the specified payload and returns the deserialized response body.
-    /// </summary>
-    /// <typeparam name="T">The type of the payload.</typeparam>
-    /// <typeparam name="TResult">The type to which the response body will be converted.</typeparam>
-    /// <param name="requestUri">The Uri the request is sent to.</param>
-    /// <param name="payload">The payload to send in the request body.</param>
-    /// <param name="cancellationToken">Optional. The token to monitor for cancellation requests.</param>
-    /// <returns>A task that represents the asynchronous operation, containing the deserialized response.</returns>
-    public async Task<HttpResponseContent<TResult>> PostAsync<T, TResult>(Uri requestUri, T payload, CancellationToken cancellationToken = default)
+
+    private async Task<HttpResponseContent<TResult>> SendAsync<T, TResult>(HttpMethod method, Uri requestUri, T payload, CancellationToken cancellationToken)
     {
-        var client = _httpClientFactory.CreateClient();
-        // Ensure a default timeout is set if none is specified
-        client.Timeout = _timeout ?? TimeSpan.FromSeconds(100);
+        using var client = CreateConfiguredClient();
+        var jsonPayload = _stringConverter.ConvertFromModel(payload);
+        using var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+        var request = new HttpRequestMessage(method, requestUri) { Content = httpContent };
 
-        try
-        {
-            // Serialize the payload to a JSON string
-            var jsonPayload = stringConverter.ConvertFromModel(payload);
-            using var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-
-            var response = await client.PostAsync(requestUri, httpContent, cancellationToken);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync(cancellationToken);
-                var deserializedContent = _stringConverter.ConvertFromString<TResult>(content);
-                return new HttpResponseContent<TResult>(deserializedContent, response.StatusCode);
-            }
-            else
-            {
-                // Handle non-success status codes
-                return new HttpResponseContent<TResult>($"Error: {response.ReasonPhrase}", response.StatusCode);
-            }
-        }
-        catch (HttpRequestException ex)
-        {
-            // Handle known exceptions related to HTTP requests
-            return new HttpResponseContent<TResult>($"HTTP Request Exception: {ex.Message}", HttpStatusCode.ServiceUnavailable);
-        }
-        catch (TaskCanceledException ex)
-        {
-            // Handle timeout exception
-            return new HttpResponseContent<TResult>($"Timeout Exception: {ex.Message}", HttpStatusCode.RequestTimeout);
-        }
-        catch (Exception ex)
-        {
-            // Handle unexpected exceptions
-            return new HttpResponseContent<TResult>($"Unexpected Exception: {ex.Message}", HttpStatusCode.InternalServerError);
-        }
+        return await ExecuteRequestAsync<TResult>(() => client.SendAsync(request, cancellationToken), cancellationToken);
     }
+
     /// <summary>
-    /// Asynchronously sends a PUT request to the specified Uri with the specified payload.
+    /// Sends an HTTP DELETE request asynchronously and returns the response content.
     /// </summary>
-    /// <typeparam name="T">The type of the payload.</typeparam>
-    /// <typeparam name="TResult">The type to which the response body will be converted.</typeparam>
-    /// <param name="requestUri">The Uri the request is sent to.</param>
-    /// <param name="payload">The payload to send in the request body.</param>
-    /// <param name="cancellationToken">Optional. The token to monitor for cancellation requests.</param>
-    /// <returns>A task that represents the asynchronous operation, containing the deserialized response.</returns>
-    public async Task<HttpResponseContent<TResult>> PutAsync<T, TResult>(Uri requestUri, T payload, CancellationToken cancellationToken = default)
-    {
-        var client = _httpClientFactory.CreateClient();
-        client.Timeout = _timeout ?? TimeSpan.FromSeconds(100);
-
-        try
-        {
-            var jsonPayload = stringConverter.ConvertFromModel(payload);
-            using var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-
-            var response = await client.PutAsync(requestUri, httpContent, cancellationToken);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync(cancellationToken);
-                var deserializedContent = _stringConverter.ConvertFromString<TResult>(content);
-                return new HttpResponseContent<TResult>(deserializedContent, response.StatusCode);
-            }
-            else
-            {
-                return new HttpResponseContent<TResult>($"Error: {response.ReasonPhrase}", response.StatusCode);
-            }
-        }
-        catch (HttpRequestException ex)
-        {
-            return new HttpResponseContent<TResult>($"HTTP Request Exception: {ex.Message}", HttpStatusCode.ServiceUnavailable);
-        }
-        catch (TaskCanceledException ex)
-        {
-            return new HttpResponseContent<TResult>($"Timeout Exception: {ex.Message}", HttpStatusCode.RequestTimeout);
-        }
-        catch (Exception ex)
-        {
-            return new HttpResponseContent<TResult>($"Unexpected Exception: {ex.Message}", HttpStatusCode.InternalServerError);
-        }
-    }
-    /// <summary>
-    /// Asynchronously sends a DELETE request to the specified Uri.
-    /// </summary>
-    /// <typeparam name="TResult">The type to which the response body will be converted.</typeparam>
-    /// <param name="requestUri">The Uri the request is sent to.</param>
-    /// <param name="cancellationToken">Optional. The token to monitor for cancellation requests.</param>
-    /// <returns>A task that represents the asynchronous operation, containing the deserialized response.</returns>
+    /// <typeparam name="TResult">The type of the response content.</typeparam>
+    /// <param name="requestUri">The URI of the request.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>An instance of HttpResponseContent containing the response content and status code.</returns>
     public async Task<HttpResponseContent<TResult>> DeleteAsync<TResult>(Uri requestUri, CancellationToken cancellationToken = default)
     {
-        var client = _httpClientFactory.CreateClient();
-        client.Timeout = _timeout ?? TimeSpan.FromSeconds(100);
-
-        try
-        {
-            var response = await client.DeleteAsync(requestUri, cancellationToken);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync(cancellationToken);
-                var deserializedContent = _stringConverter.ConvertFromString<TResult>(content);
-                return new HttpResponseContent<TResult>(deserializedContent, response.StatusCode);
-            }
-            else
-            {
-                return new HttpResponseContent<TResult>($"Error: {response.ReasonPhrase}", response.StatusCode);
-            }
-        }
-        catch (HttpRequestException ex)
-        {
-            return new HttpResponseContent<TResult>($"HTTP Request Exception: {ex.Message}", HttpStatusCode.ServiceUnavailable);
-        }
-        catch (TaskCanceledException ex)
-        {
-            return new HttpResponseContent<TResult>($"Timeout Exception: {ex.Message}", HttpStatusCode.RequestTimeout);
-        }
-        catch (Exception ex)
-        {
-            return new HttpResponseContent<TResult>($"Unexpected Exception: {ex.Message}", HttpStatusCode.InternalServerError);
-        }
+        using var client = CreateConfiguredClient();
+        return await ExecuteRequestAsync<TResult>(() => client.DeleteAsync(requestUri, cancellationToken), cancellationToken);
     }
 
+    /// <summary>
+    /// Sends an HTTP GET request asynchronously and returns the response content.
+    /// </summary>
+    /// <typeparam name="T">The type of the response content.</typeparam>
+    /// <param name="requestUri">The URI of the request.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>An instance of HttpResponseContent containing the response content and status code.</returns>
+    public Task<HttpResponseContent<T>> GetAsync<T>(Uri requestUri, CancellationToken cancellationToken = default)
+    {
+        using var client = CreateConfiguredClient();
+        return ExecuteRequestAsync<T>(() => client.GetAsync(requestUri, cancellationToken), cancellationToken);
+    }
+
+    /// <summary>
+    /// Sends an HTTP POST request asynchronously and returns the response content.
+    /// </summary>
+    /// <typeparam name="T">The type of the request payload.</typeparam>
+    /// <typeparam name="TResult">The type of the response content.</typeparam>
+    /// <param name="requestUri">The URI of the request.</param>
+    /// <param name="payload">The request payload.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>An instance of HttpResponseContent containing the response content and status code.</returns>
+    public Task<HttpResponseContent<TResult>> PostAsync<T, TResult>(Uri requestUri, T payload, CancellationToken cancellationToken = default)
+    {
+        return SendAsync<T, TResult>(HttpMethod.Post, requestUri, payload, cancellationToken);
+    }
+
+    /// <summary>
+    /// Sends an HTTP PUT request asynchronously and returns the response content.
+    /// </summary>
+    /// <typeparam name="T">The type of the request payload.</typeparam>
+    /// <typeparam name="TResult">The type of the response content.</typeparam>
+    /// <param name="requestUri">The URI of the request.</param>
+    /// <param name="payload">The request payload.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>An instance of HttpResponseContent containing the response content and status code.</returns>
+    public Task<HttpResponseContent<TResult>> PutAsync<T, TResult>(Uri requestUri, T payload, CancellationToken cancellationToken = default)
+    {
+        return SendAsync<T, TResult>(HttpMethod.Put, requestUri, payload, cancellationToken);
+    }
+
+    /// <summary>
+    /// Gets or sets the timeout for HTTP requests.
+    /// </summary>
+    public TimeSpan Timeout
+    {
+        set => _timeout = value;
+    }
 }

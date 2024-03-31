@@ -26,6 +26,7 @@ builder.Configuration
 
 // Register HttpClientFactory
 builder.Services.AddHttpClient();
+builder.Services.AddHealthChecks();
 builder.Services.AddSingleton<IStringConverter, NewtonsoftJsonStringConverter>();
 builder.Services.AddTransient<IHttpClientService, HttpClientService>();
 builder.Services.AddSingleton<IMapsService, GoogleMapsServiceApi>();
@@ -46,7 +47,12 @@ app.MapGet("/geocoding/latlong", async (IMapsService googleMapsService, double l
 {
     return Results.Ok(await googleMapsService.GetGeocodingFromLatLong(latitude, longitude));
 });
-
+app.MapHealthChecks("/health");
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/swagger/index.html");
+    return Task.CompletedTask;
+});
 app.Run();
 
 static void ConfigureLogging(WebApplicationBuilder builder)

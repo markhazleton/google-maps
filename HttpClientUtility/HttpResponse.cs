@@ -1,51 +1,64 @@
+using System;
 using System.Net;
 
 namespace HttpClientUtility;
 
 /// <summary>
-/// HttpResponseContent
+/// Represents the response content of an HTTP request.
 /// </summary>
-/// <typeparam name="T"></typeparam>
+/// <typeparam name="T">The type of the content.</typeparam>
 public class HttpResponseContent<T>
 {
     /// <summary>
-    /// StatusCode from request
+    /// Gets the status code of the HTTP response.
     /// </summary>
-    public HttpStatusCode StatusCode { get; set; }
-    /// <summary>
-    /// Is request successfull or not
-    /// </summary>
-    public bool IsSuccess { get; set; }
-    /// <summary>
-    /// If not successfull, error message
-    /// </summary>
-    public string? ErrorMessage { get; set; }
-    /// <summary>
-    /// Return content
-    /// </summary>
-    public T? Content { get; set; }
+    public HttpStatusCode StatusCode { get; }
 
     /// <summary>
-    /// Constructor for a successful response
+    /// Gets a value indicating whether the HTTP response is successful.
     /// </summary>
-    /// <param name="content"></param>
-    /// <param name="statusCode"></param>
-    public HttpResponseContent(T content, HttpStatusCode statusCode)
+    public bool IsSuccess { get; }
+
+    /// <summary>
+    /// Gets the error message of the HTTP response, if any.
+    /// </summary>
+    public string? ErrorMessage { get; }
+
+    /// <summary>
+    /// Gets the content of the HTTP response.
+    /// </summary>
+    public T? Content { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="HttpResponseContent{T}"/> class.
+    /// </summary>
+    /// <param name="content">The content of the HTTP response.</param>
+    /// <param name="errorMessage">The error message of the HTTP response.</param>
+    /// <param name="statusCode">The status code of the HTTP response.</param>
+    /// <param name="isSuccess">A value indicating whether the HTTP response is successful.</param>
+    private HttpResponseContent(T? content, string? errorMessage, HttpStatusCode statusCode, bool isSuccess)
     {
         StatusCode = statusCode;
-        IsSuccess = true;
-        Content = content;
+        IsSuccess = isSuccess;
+        Content = isSuccess ? content : throw new ArgumentNullException(nameof(content), "Content cannot be null for a successful response.");
+        ErrorMessage = !isSuccess ? errorMessage : null;
     }
 
     /// <summary>
-    /// constructor for a failed response
+    /// Creates a success instance of the <see cref="HttpResponseContent{T}"/> class.
     /// </summary>
-    /// <param name="errorMessage"></param>
-    /// <param name="statusCode"></param>
-    public HttpResponseContent(string errorMessage, HttpStatusCode statusCode)
-    {
-        StatusCode = statusCode;
-        IsSuccess = false;
-        ErrorMessage = errorMessage;
-    }
+    /// <param name="content">The content of the HTTP response.</param>
+    /// <param name="statusCode">The status code of the HTTP response.</param>
+    /// <returns>A success instance of the <see cref="HttpResponseContent{T}"/> class.</returns>
+    public static HttpResponseContent<T> Success(T content, HttpStatusCode statusCode) =>
+        new(content, null, statusCode, true);
+
+    /// <summary>
+    /// Creates a failure instance of the <see cref="HttpResponseContent{T}"/> class.
+    /// </summary>
+    /// <param name="errorMessage">The error message of the HTTP response.</param>
+    /// <param name="statusCode">The status code of the HTTP response.</param>
+    /// <returns>A failure instance of the <see cref="HttpResponseContent{T}"/> class.</returns>
+    public static HttpResponseContent<T> Failure(string errorMessage, HttpStatusCode statusCode) =>
+        new(default, errorMessage, statusCode, false);
 }

@@ -2,7 +2,6 @@
 using GoogleMapsApi.Entities.PlacesFind.Response;
 using GoogleMapsApi.Test.Utils;
 using NUnit.Framework;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,7 +16,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             var request = new PlacesFindRequest
             {
                 ApiKey = ApiKey,
-                Input = "pizza chicago il",
+                Input = "pizza wichita ks",
                 InputType = InputType.TextQuery
             };
 
@@ -34,7 +33,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             var request = new PlacesFindRequest
             {
                 ApiKey = ApiKey,
-                Input = "pizza chicago il",
+                Input = "pizza wichita ks",
                 InputType = InputType.TextQuery,
                 Fields = "place_id"
             };
