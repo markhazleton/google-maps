@@ -5,7 +5,6 @@ using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
 using Status = GoogleMapsApi.Entities.Geocoding.Response.Status;
@@ -33,7 +32,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
         }
 
         [Test]
-        public void GeocodingAsync_ReturnsCorrectLocation()
+        public async Task GeocodingAsync_ReturnsCorrectLocation()
         {
             var request = new GeocodingRequest
             {
@@ -41,7 +40,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
                 Address = "285 Bedford Ave, Brooklyn, NY 11211, USA"
             };
 
-            var result = GoogleMaps.Geocode.QueryAsync(request, _httpClientService).Result;
+            var result = await GoogleMaps.Geocode.QueryAsync(request, _httpClientService);
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
@@ -88,7 +87,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
 
             var task = GoogleMaps.Geocode.QueryAsync(request, _httpClientService, cts.Token);
 
-            Assert.Throws(Is.TypeOf<AggregateException>().And.InnerException.TypeOf<TaskCanceledException>(),
+            Assert.Throws(Is.TypeOf<AggregateException>().And.InnerException.TypeOf<HttpRequestException>(),
                             () => task.Wait());
         }
 

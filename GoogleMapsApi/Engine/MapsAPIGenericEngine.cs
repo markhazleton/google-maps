@@ -1,5 +1,6 @@
 using GoogleMapsApi.Entities.Common;
 using HttpClientUtility;
+using HttpClientUtility.StringConverter;
 using System;
 using System.Net.Http;
 using System.Threading;

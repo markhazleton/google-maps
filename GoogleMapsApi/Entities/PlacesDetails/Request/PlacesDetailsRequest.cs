@@ -1,4 +1,5 @@
 ﻿using GoogleMapsApi.Entities.Common;
+using HttpClientUtility;
 using System;
 
 namespace GoogleMapsApi.Entities.PlacesDetails.Request

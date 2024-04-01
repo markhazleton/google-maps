@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleMapsApi", "GoogleMaps
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleMapsApi.Api", "GoogleMapsApi.Api\GoogleMapsApi.Api.csproj", "{CBC9D706-DA22-4DAA-8E10-0C167E4C2F5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClientUtility", "HttpClientUtility\HttpClientUtility.csproj", "{C23086C3-914E-46B5-AA08-821420BA0DFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpClientUtility", "HttpClientUtility\HttpClientUtility.csproj", "{C23086C3-914E-46B5-AA08-821420BA0DFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClientUtility.Test", "HttpClientUtility.Test\HttpClientUtility.Test.csproj", "{D77A7315-0CDD-45BD-84E9-9225F22C78F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,6 +80,18 @@ Global
 		{C23086C3-914E-46B5-AA08-821420BA0DFC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C23086C3-914E-46B5-AA08-821420BA0DFC}.Release|x86.ActiveCfg = Release|Any CPU
 		{C23086C3-914E-46B5-AA08-821420BA0DFC}.Release|x86.Build.0 = Release|Any CPU
+		{D77A7315-0CDD-45BD-84E9-9225F22C78F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D77A7315-0CDD-45BD-84E9-9225F22C78F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D77A7315-0CDD-45BD-84E9-9225F22C78F3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D77A7315-0CDD-45BD-84E9-9225F22C78F3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D77A7315-0CDD-45BD-84E9-9225F22C78F3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D77A7315-0CDD-45BD-84E9-9225F22C78F3}.Debug|x86.Build.0 = Debug|Any CPU
+		{D77A7315-0CDD-45BD-84E9-9225F22C78F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D77A7315-0CDD-45BD-84E9-9225F22C78F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D77A7315-0CDD-45BD-84E9-9225F22C78F3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D77A7315-0CDD-45BD-84E9-9225F22C78F3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D77A7315-0CDD-45BD-84E9-9225F22C78F3}.Release|x86.ActiveCfg = Release|Any CPU
+		{D77A7315-0CDD-45BD-84E9-9225F22C78F3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +101,7 @@ Global
 		{61E9FC82-47B0-43C3-8749-95D3A9967060} = {950E065F-B61E-4C05-8C74-5F03946AD7E2}
 		{CBC9D706-DA22-4DAA-8E10-0C167E4C2F5A} = {950E065F-B61E-4C05-8C74-5F03946AD7E2}
 		{C23086C3-914E-46B5-AA08-821420BA0DFC} = {950E065F-B61E-4C05-8C74-5F03946AD7E2}
+		{D77A7315-0CDD-45BD-84E9-9225F22C78F3} = {9D09CCCC-6AFA-41EA-BFB3-4698FC5830E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {061AA237-7231-49DE-835A-296ED94715C4}

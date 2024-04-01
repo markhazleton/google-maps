@@ -1,5 +1,6 @@
 ﻿using GoogleMapsApi.Engine;
 using GoogleMapsApi.Entities.Common;
+using HttpClientUtility;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

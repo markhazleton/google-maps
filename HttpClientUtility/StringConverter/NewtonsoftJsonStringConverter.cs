@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using System;
 
-namespace HttpClientUtility;
+namespace HttpClientUtility.StringConverter;
 
 /// <summary>
 /// Converts strings to and from JSON using Newtonsoft.Json library.

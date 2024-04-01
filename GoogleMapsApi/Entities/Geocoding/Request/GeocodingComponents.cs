@@ -5,7 +5,7 @@ namespace GoogleMapsApi.Entities.Geocoding.Request
 {
     public class GeocodingComponents
     {
-        private readonly Dictionary<string, string> components = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> components = [];
 
         /// <summary>
         /// matches long or short name of a route.

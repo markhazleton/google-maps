@@ -1,4 +1,5 @@
 ﻿using HttpClientUtility;
+using HttpClientUtility.StringConverter;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;

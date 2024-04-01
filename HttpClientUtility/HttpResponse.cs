@@ -40,7 +40,9 @@ public class HttpResponseContent<T>
     {
         StatusCode = statusCode;
         IsSuccess = isSuccess;
-        Content = isSuccess ? content : throw new ArgumentNullException(nameof(content), "Content cannot be null for a successful response.");
+        if(isSuccess)
+            Content = content;
+
         ErrorMessage = !isSuccess ? errorMessage : null;
     }
 

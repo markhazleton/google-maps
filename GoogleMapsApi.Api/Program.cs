@@ -1,6 +1,7 @@
 using GoogleMapsApi;
 using GoogleMapsApi.Api;
 using HttpClientUtility;
+using HttpClientUtility.StringConverter;
 using Serilog;
 using Serilog.Extensions.Logging;
 using System.Reflection;

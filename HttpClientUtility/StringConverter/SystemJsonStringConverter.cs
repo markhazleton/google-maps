@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json;
 
-namespace HttpClientUtility;
+namespace HttpClientUtility.StringConverter;
 
 /// <summary>
 /// Converts objects to and from JSON strings using the System.Text.Json library.

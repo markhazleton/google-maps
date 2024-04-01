@@ -1,4 +1,4 @@
-namespace HttpClientUtility;
+namespace HttpClientUtility.StringConverter;
 
 /// <summary>
 /// Intervece for converting string to model and model to string

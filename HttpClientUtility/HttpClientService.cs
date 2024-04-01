@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using HttpClientUtility.StringConverter;
 
 namespace HttpClientUtility;
 
@@ -101,10 +102,36 @@ public class HttpClientService(IHttpClientFactory httpClientFactory, IStringConv
     /// <param name="requestUri">The URI of the request.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>An instance of HttpResponseContent containing the response content and status code.</returns>
-    public Task<HttpResponseContent<T>> GetAsync<T>(Uri requestUri, CancellationToken cancellationToken = default)
+    public async Task<HttpResponseContent<T>> GetAsync<T>(Uri requestUri, CancellationToken cancellationToken = default)
     {
-        using var client = CreateConfiguredClient();
-        return ExecuteRequestAsync<T>(() => client.GetAsync(requestUri, cancellationToken), cancellationToken);
+        try
+        {
+            using var client = CreateConfiguredClient();
+            var response = await client.GetAsync(requestUri, cancellationToken);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync(cancellationToken);
+                var deserializedContent = _stringConverter.ConvertFromString<T>(content);
+                return HttpResponseContent<T>.Success(deserializedContent, response.StatusCode);
+            }
+            else
+            {
+                return HttpResponseContent<T>.Failure($"Error: {response.ReasonPhrase}", response.StatusCode);
+            }
+        }
+        catch (HttpRequestException ex)
+        {
+            return HttpResponseContent<T>.Failure($"HTTP Request Exception: {ex.Message}", HttpStatusCode.ServiceUnavailable);
+        }
+        catch (TaskCanceledException ex)
+        {
+            return HttpResponseContent<T>.Failure($"Timeout Exception: {ex.Message}", HttpStatusCode.RequestTimeout);
+        }
+        catch (Exception ex)
+        {
+            return HttpResponseContent<T>.Failure($"Unexpected Exception: {ex.Message}", HttpStatusCode.InternalServerError);
+        }
+        //        return ExecuteRequestAsync<T>(async () => await client.GetAsync(requestUri, cancellationToken), cancellationToken);
     }
 
     /// <summary>
