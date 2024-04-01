@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 
@@ -26,7 +25,7 @@ public class QueryStringParametersList
     /// </summary>
     /// <param name="key">The key of the parameter.</param>
     /// <param name="value">The value of the parameter.</param>
-    public void Add(string key, string value)
+    public void Add(string? key, string? value)
     {
         if (string.IsNullOrWhiteSpace(key))
         {
@@ -37,7 +36,15 @@ public class QueryStringParametersList
         {
             throw new ArgumentNullException(nameof(value), "Value cannot be null.");
         }
-        ParameterList.Add(new KeyValuePair<string, string>(key, value));
+        int index = ParameterList.FindIndex(p => p.Key == key);
+        if (index >= 0)
+        {
+            ParameterList[index] = new KeyValuePair<string, string>(key, value);
+        }
+        else
+        {
+            ParameterList.Add(new KeyValuePair<string, string>(key, value));
+        }
     }
 
     /// <summary>
