@@ -36,15 +36,17 @@ public class QueryStringParametersList
         {
             throw new ArgumentNullException(nameof(value), "Value cannot be null.");
         }
-        int index = ParameterList.FindIndex(p => p.Key == key);
-        if (index >= 0)
-        {
-            ParameterList[index] = new KeyValuePair<string, string>(key, value);
-        }
-        else
-        {
-            ParameterList.Add(new KeyValuePair<string, string>(key, value));
-        }
+        ParameterList.Add(new KeyValuePair<string, string>(key, value));
+
+        //int index = ParameterList.FindIndex(p => p.Key == key);
+        //if (index >= 0)
+        //{
+        //    ParameterList[index] = new KeyValuePair<string, string>(key, value);
+        //}
+        //else
+        //{
+        //    ParameterList.Add(new KeyValuePair<string, string>(key, value));
+        //}
     }
 
     /// <summary>

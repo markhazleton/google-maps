@@ -1,6 +1,4 @@
-﻿using HttpClientUtility;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 
 namespace HttpClientUtility.Test;
 
@@ -70,6 +68,6 @@ public class QueryStringParametersListTests
         parameters.Add("key", "value2");
 
         // Assert
-        Assert.AreEqual("key=value2", parameters.GetQueryStringPostfix());
+        Assert.AreEqual("key=value1&key=value2", parameters.GetQueryStringPostfix());
     }
 }

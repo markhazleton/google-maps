@@ -1,0 +1,9 @@
+
+GET https://localhost:7160/geocode/3229%20Flat%20Creek%20St%20Wichita%2C%20KS
+Accept: application/json
+
+###
+GET https://localhost:7160/geocode/37.7415821/-97.455398
+Accept: application/json
+
+###
