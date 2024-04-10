@@ -1,5 +1,3 @@
-[![Build Status](https://github.com/maximn/google-maps/actions/workflows/dotnet.yml/badge.svg)](https://github.com/maximn/google-maps/actions/workflows/dotnet.yml)
-[![NuGet Status](https://img.shields.io/nuget/v/GoogleMapsApi.svg)](https://www.nuget.org/packages/GoogleMapsApi/)
 
 google-maps
 ===========
@@ -11,9 +9,6 @@ For Quickstart and more info read the wiki pages (https://github.com/maximn/goog
 The web page - http://maximn.github.com/google-maps
 
 NuGet page - https://www.nuget.org/packages/GoogleMapsApi/
-
-
-**Check out my blog at http://maxondev.com**
 
 # Quickstart
 
