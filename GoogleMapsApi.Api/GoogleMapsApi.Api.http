@@ -1,9 +1,0 @@
-
-GET https://localhost:7071/geocoding/address?address=3229%20Flat%20Creek%20St%20Wichita%2C%20KS
-Accept: application/json
-
-###
-GET https://localhost:7071/geocoding/latlong?latitude=37.7415821&longitude=-97.455398
-Accept: application/json
-
-###
