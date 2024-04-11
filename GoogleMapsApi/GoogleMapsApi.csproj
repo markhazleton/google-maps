@@ -30,9 +30,9 @@
     <None Include="Entities\Directions\The Google Directions API - Google Maps API Web Services - Google Code.htm" />
     <None Include="ReleaseNotes.md" />
   </ItemGroup>
- 
+  
   <ItemGroup>
-    <ProjectReference Include="..\HttpClientUtility\HttpClientUtility.csproj" />
+    <ProjectReference Include="..\..\HttpClientDecoratorPattern\HttpClientUtility\HttpClientUtility.csproj" />
   </ItemGroup>
   
 </Project>

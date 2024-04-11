@@ -1,6 +1,7 @@
 using FastEndpointApi.endpoints.Geocode;
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using GoogleMapsApi.FE.endpoints.WichitaWisdom.Service;
 using HttpClientUtility;
 using HttpClientUtility.StringConverter;
 
@@ -16,6 +17,7 @@ builder.Services.AddHealthChecks();
 builder.Services.AddSingleton<IStringConverter, NewtonsoftJsonStringConverter>();
 builder.Services.AddTransient<IHttpClientService, HttpClientService>();
 builder.Services.AddSingleton<IGeocodeService, GoogleMapsGeocodeService>();
+builder.Services.AddSingleton<IWichitaWisdomService, WichitaWisdomService>();
 
 var app = builder.Build();
 app.UseFastEndpoints(c =>

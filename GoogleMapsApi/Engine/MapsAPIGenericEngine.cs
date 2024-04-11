@@ -37,7 +37,6 @@ namespace GoogleMapsApi.Engine
             ArgumentNullException.ThrowIfNull(request);
             var uri = request.GetUri();
             OnUriCreated?.Invoke(uri);
-            clientService.Timeout = timeout;
             var httpResponse = await clientService.GetAsync<TResponse>(uri, token);
             if (httpResponse.IsSuccess)
             {
