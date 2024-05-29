@@ -32,7 +32,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\HttpClientDecoratorPattern\HttpClientUtility\HttpClientUtility.csproj" />
+    <ProjectReference Include="..\HttpClientUtility\HttpClientUtility.csproj" />
   </ItemGroup>
   
 </Project>
