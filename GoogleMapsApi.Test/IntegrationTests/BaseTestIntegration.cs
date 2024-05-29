@@ -1,4 +1,4 @@
-﻿using HttpClientUtility;
+﻿using HttpClientUtility.FullService;
 using HttpClientUtility.StringConverter;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +17,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
     {
         private readonly IConfigurationRoot Configuration;
         protected readonly IHttpClientFactory _httpClientFactory;
-        protected readonly IHttpClientService _httpClientService;
+        protected readonly IHttpClientFullService _httpClientService;
 
         public BaseTestIntegration()
         {

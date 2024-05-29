@@ -2,7 +2,7 @@
 using GoogleMapsApi.Entities.Common;
 using GoogleMapsApi.Entities.Geocoding.Request;
 using GoogleMapsApi.Entities.Geocoding.Response;
-using HttpClientUtility;
+using HttpClientUtility.FullService;
 
 namespace FastEndpointApi.endpoints.Geocode;
 
@@ -14,7 +14,7 @@ namespace FastEndpointApi.endpoints.Geocode;
 /// </remarks>
 /// <param name="httpClientService">The factory to create instances of <see cref="HttpClient"/>.</param>
 /// <param name="configuration">The application configuration to access Google Maps API key.</param>
-public class GoogleMapsGeocodeService(IHttpClientService httpClientService, IConfiguration configuration) : IGeocodeService
+public class GoogleMapsGeocodeService(IHttpClientFullService httpClientService, IConfiguration configuration) : IGeocodeService
 {
     private readonly string apiKey = configuration.GetValue<string>("GOOGLE_API_KEY") ?? "not found";
 

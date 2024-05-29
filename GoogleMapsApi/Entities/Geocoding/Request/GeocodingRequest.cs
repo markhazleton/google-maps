@@ -1,5 +1,5 @@
 ﻿using GoogleMapsApi.Entities.Common;
-using HttpClientUtility;
+using HttpClientUtility.Models;
 using System;
 using System.Linq;
 

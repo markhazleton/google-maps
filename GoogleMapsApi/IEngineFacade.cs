@@ -1,6 +1,6 @@
 using GoogleMapsApi.Engine;
 using GoogleMapsApi.Entities.Common;
-using HttpClientUtility;
+using HttpClientUtility.FullService;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,7 +30,7 @@ namespace GoogleMapsApi
         /// <param name="token">Optional cancellation token instance</param>
         /// <returns>A Task with the future value of the response.</returns>
         /// <exception cref="ArgumentNullException">Thrown when a null value is passed to the request parameter.</exception>
-        Task<TResponse> QueryAsync(TRequest request, IHttpClientService service, CancellationToken token = default);
+        Task<TResponse> QueryAsync(TRequest request, IHttpClientFullService service, CancellationToken token = default);
 
         /// <summary>
         /// Asynchronously query the Google Maps API using the provided request.
@@ -44,6 +44,6 @@ namespace GoogleMapsApi
         /// <returns>A Task with the future value of the response.</returns>
         /// <exception cref="ArgumentNullException">Thrown when a null value is passed to the request parameter.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the value of timeout is neither a positive value or infinite.</exception>
-        Task<TResponse> QueryAsync(TRequest request, IHttpClientService service, TimeSpan timeout, CancellationToken token = default);
+        Task<TResponse> QueryAsync(TRequest request, IHttpClientFullService service, TimeSpan timeout, CancellationToken token = default);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using GoogleMapsApi.Engine;
 using GoogleMapsApi.Entities.Common;
-using HttpClientUtility;
+using HttpClientUtility.Models;
 using System;
 
 namespace GoogleMapsApi.Entities.TimeZone.Request

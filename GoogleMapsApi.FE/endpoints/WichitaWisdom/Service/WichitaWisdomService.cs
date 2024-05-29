@@ -1,9 +1,9 @@
 ﻿using GoogleMapsApi.FE.endpoints.WichitaWisdom.OpenAI;
-using HttpClientUtility;
+using HttpClientUtility.FullService;
 
 namespace GoogleMapsApi.FE.endpoints.WichitaWisdom.Service;
 
-public class WichitaWisdomService(IHttpClientService httpClientService, IConfiguration configuration) : IWichitaWisdomService
+public class WichitaWisdomService(IHttpClientFullService httpClientService, IConfiguration configuration) : IWichitaWisdomService
 {
     private readonly Dictionary<string, string> headers = new() { { "Authorization", $"Bearer {configuration.GetValue<string>("OPENAI_API_KEY") ?? "not found"}" } };
     private readonly Uri openAiUrl = new(configuration.GetValue<string>("OPENAI_URL") ?? "https://api.openai.com/v1/chat/completions");

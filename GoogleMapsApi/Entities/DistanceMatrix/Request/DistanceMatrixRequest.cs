@@ -1,10 +1,8 @@
-﻿using HttpClientUtility;
-
-namespace GoogleMapsApi.Entities.DistanceMatrix.Request
+﻿namespace GoogleMapsApi.Entities.DistanceMatrix.Request
 {
 
     using Common;
-
+    using HttpClientUtility.Models;
     using System;
     using System.Linq;
 

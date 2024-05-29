@@ -1,6 +1,6 @@
 using GoogleMapsApi.Engine;
 using GoogleMapsApi.Entities.Common;
-using HttpClientUtility;
+using HttpClientUtility.FullService;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -55,14 +55,14 @@ namespace GoogleMapsApi
             }
         }
 
-        public Task<TResponse> QueryAsync(TRequest request, IHttpClientService service, CancellationToken token = default)
+        public Task<TResponse> QueryAsync(TRequest request, IHttpClientFullService service, CancellationToken token = default)
         {
             return _mapsEngine.QueryGoogleAPIAsync(request, service, token);
         }
 
-        public Task<TResponse> QueryAsync(TRequest request, IHttpClientService service, TimeSpan timeout, CancellationToken token = default)
+        public Task<TResponse> QueryAsync(TRequest request, IHttpClientFullService service, TimeSpan timeout, CancellationToken token = default)
         {
-            return _mapsEngine.QueryGoogleAPIAsync(request, service,timeout, token);
+            return _mapsEngine.QueryGoogleAPIAsync(request, service, timeout, token);
         }
     }
 }

@@ -1,5 +1,5 @@
 using GoogleMapsApi.Entities.Common;
-using HttpClientUtility;
+using HttpClientUtility.FullService;
 using HttpClientUtility.StringConverter;
 using System;
 using System.Net.Http;
@@ -20,7 +20,7 @@ namespace GoogleMapsApi.Engine
         //public static event RawResponseReceivedDelegate OnRawResponseReceived;
         private HttpClient _client;
 
-        protected internal async Task<TResponse> QueryGoogleAPIAsync(TRequest request, IHttpClientService clientService, CancellationToken token = default)
+        protected internal async Task<TResponse> QueryGoogleAPIAsync(TRequest request, IHttpClientFullService clientService, CancellationToken token = default)
         {
             ArgumentNullException.ThrowIfNull(request);
             var uri = request.GetUri();
@@ -32,7 +32,7 @@ namespace GoogleMapsApi.Engine
             }
             throw new HttpRequestException($"Request failed with status code {httpResponse.StatusCode} and message: {httpResponse.Content}");
         }
-        protected internal async Task<TResponse> QueryGoogleAPIAsync(TRequest request, IHttpClientService clientService, TimeSpan timeout, CancellationToken token = default)
+        protected internal async Task<TResponse> QueryGoogleAPIAsync(TRequest request, IHttpClientFullService clientService, TimeSpan timeout, CancellationToken token = default)
         {
             ArgumentNullException.ThrowIfNull(request);
             var uri = request.GetUri();
@@ -56,12 +56,12 @@ namespace GoogleMapsApi.Engine
             var response = await GetHttpResponseContent(uri, timeout, token).ConfigureAwait(false);
             return converter.ConvertFromString<TResponse>(response);
         }
-        private async Task<string> GetHttpResponseContent( Uri address, TimeSpan timeout, CancellationToken token)
+        private async Task<string> GetHttpResponseContent(Uri address, TimeSpan timeout, CancellationToken token)
         {
             var httpResponse = await GetHttpResponse(address, timeout, token).ConfigureAwait(false);
             return await httpResponse.Content.ReadAsStringAsync(token).ConfigureAwait(false);
         }
-        private async Task<HttpResponseMessage> GetHttpResponse( Uri address, TimeSpan timeout, CancellationToken token)
+        private async Task<HttpResponseMessage> GetHttpResponse(Uri address, TimeSpan timeout, CancellationToken token)
         {
             ArgumentNullException.ThrowIfNull(_client);
             ArgumentNullException.ThrowIfNull(address);

@@ -12,9 +12,9 @@
 		<UserSecretsId>10d9b312-219d-45ab-b486-f8a74e738cad</UserSecretsId>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="FastEndpoints" Version="5.24.0" />
-		<PackageReference Include="FastEndpoints.Attributes" Version="5.24.0" />
-		<PackageReference Include="FastEndpoints.Swagger" Version="5.24.0" />
+		<PackageReference Include="FastEndpoints" Version="5.25.0" />
+		<PackageReference Include="FastEndpoints.Attributes" Version="5.25.0" />
+		<PackageReference Include="FastEndpoints.Swagger" Version="5.25.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\HttpClientDecoratorPattern\HttpClientUtility\HttpClientUtility.csproj" />

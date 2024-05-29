@@ -1,7 +1,7 @@
 using GoogleMapsApi.Entities.Common;
 using GoogleMapsApi.StaticMaps.Entities;
 using GoogleMapsApi.StaticMaps.Enums;
-using HttpClientUtility;
+using HttpClientUtility.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

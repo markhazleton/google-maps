@@ -1,4 +1,4 @@
-﻿using HttpClientUtility;
+﻿using HttpClientUtility.Models;
 using System;
 
 namespace GoogleMapsApi.Entities.Common;
