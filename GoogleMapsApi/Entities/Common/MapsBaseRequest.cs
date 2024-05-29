@@ -3,17 +3,22 @@ using System;
 
 namespace GoogleMapsApi.Entities.Common;
 
+/// <summary>
+/// Base class for Google Maps API requests.
+/// </summary>
 public abstract class MapsBaseRequest
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MapsBaseRequest"/> class.
+    /// </summary>
     public MapsBaseRequest()
     {
         this.isSsl = true;
         ApiKey = null;
     }
 
-
     /// <summary>
-    /// True to indicate that request comes from a device with a location sensor, otherwise false. 
+    /// Gets or sets a value indicating whether the request comes from a device with a location sensor.
     /// </summary>
     /// <remarks>
     /// The Google Maps API previously required that you include the sensor parameter to indicate whether your application used a sensor to determine the user's location.
@@ -24,8 +29,11 @@ public abstract class MapsBaseRequest
     public bool Sensor { get; set; }
 
     /// <summary>
-    /// True to use use the https protocol; false to use http. The default is false.
+    /// Gets or sets a value indicating whether to use the HTTPS protocol.
     /// </summary>
+    /// <value>
+    ///   <c>true</c> to use HTTPS; otherwise, <c>false</c> to use HTTP.
+    /// </value>
     public virtual bool IsSSL
     {
         get { return isSsl; }
@@ -33,7 +41,9 @@ public abstract class MapsBaseRequest
     }
     private bool isSsl;
 
-
+    /// <summary>
+    /// Gets the base URL for the Google Maps API.
+    /// </summary>
     protected internal virtual string BaseUrl
     {
         get
@@ -43,11 +53,17 @@ public abstract class MapsBaseRequest
     }
 
     /// <summary>
-    /// Your application's API key. This key identifies your application for purposes of quota management and so that Places 
-    /// added from your application are made immediately available to your app. Visit the APIs Console to create an API Project and obtain your key.
+    /// Gets or sets the API key for the application.
     /// </summary>
+    /// <value>
+    /// The API key.
+    /// </value>
     public string ApiKey { get; set; }
 
+    /// <summary>
+    /// Gets the query string parameters for the request.
+    /// </summary>
+    /// <returns>A <see cref="QueryStringParametersList"/> containing the query string parameters.</returns>
     protected virtual QueryStringParametersList GetQueryStringParameters()
     {
         QueryStringParametersList parametersList = new();
@@ -64,6 +80,10 @@ public abstract class MapsBaseRequest
         return parametersList;
     }
 
+    /// <summary>
+    /// Gets the URI for the request.
+    /// </summary>
+    /// <returns>The URI for the request.</returns>
     public virtual Uri GetUri()
     {
         string scheme = IsSSL ? "https://" : "http://";
