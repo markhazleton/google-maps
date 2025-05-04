@@ -1,38 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-	<TargetFrameworks>net8.0</TargetFrameworks>
-	<AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-
-	<AssemblyName>GoogleMapsApi</AssemblyName>
-	<Authors>Maxim Novak, Mark Hazleton</Authors>
-	<PackageLicenseUrl>https://github.com/maximn/google-maps/blob/master/LICENSE.md</PackageLicenseUrl>
-	<Description>Google Maps Web Services API wrapper for .NET</Description>
-	<Copyright>Copyright ©  2010-2024</Copyright>
-	<PackageTags>Map Geo Places Elevation Geocode Directions Maps</PackageTags>
-	<RepositoryType>git</RepositoryType>
-	<RepositoryUrl>https://github.com/markhazleton/google-maps</RepositoryUrl>
-	<ImplicitUsings>disable</ImplicitUsings>
-	<GenerateDocumentationFile>True</GenerateDocumentationFile>
-	<Title>GogleMapsApi</Title>
+    <TargetFrameworks>net9.0</TargetFrameworks>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <AssemblyName>GoogleMapsApi</AssemblyName>
+    <Authors>Maxim Novak, Mark Hazleton</Authors>
+    <PackageLicenseUrl>https://github.com/maximn/google-maps/blob/master/LICENSE.md</PackageLicenseUrl>
+    <Description>Google Maps Web Services API wrapper for .NET</Description>
+    <Copyright>Copyright ©  2010-2024</Copyright>
+    <PackageTags>Map Geo Places Elevation Geocode Directions Maps</PackageTags>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/markhazleton/google-maps</RepositoryUrl>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>GogleMapsApi</Title>
   </PropertyGroup>
-	
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-	<IncludeSymbols>true</IncludeSymbols>
-	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
-	
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-	 <IncludeSymbols>false</IncludeSymbols>
+    <IncludeSymbols>false</IncludeSymbols>
   </PropertyGroup>
-  
   <ItemGroup>
     <None Include="Entities\Directions\The Google Directions API - Google Maps API Web Services - Google Code.htm" />
     <None Include="ReleaseNotes.md" />
   </ItemGroup>
-  
   <ItemGroup>
     <ProjectReference Include="..\HttpClientUtility\HttpClientUtility.csproj" />
   </ItemGroup>
-  
 </Project>

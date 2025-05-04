@@ -1,23 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<Nullable>enable</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-	</PropertyGroup>
-	<PropertyGroup>
-		<Deterministic>false</Deterministic>
-		<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
-		<AssemblyVersion>8.$([System.DateTime]::UtcNow.ToString(yyMM)).$([System.DateTime]::UtcNow.ToString(ddHH)).$([System.DateTime]::UtcNow.ToString(mmss))</AssemblyVersion>
-		<UserSecretsId>10d9b312-219d-45ab-b486-f8a74e738cad</UserSecretsId>
-	</PropertyGroup>
-	<ItemGroup>
-		<PackageReference Include="FastEndpoints" Version="5.29.0" />
-		<PackageReference Include="FastEndpoints.Attributes" Version="5.29.0" />
-		<PackageReference Include="FastEndpoints.Swagger" Version="5.29.0" />
-	</ItemGroup>
-	<ItemGroup>
-	  <ProjectReference Include="..\GoogleMapsApi\GoogleMapsApi.csproj" />
-	  <ProjectReference Include="..\HttpClientUtility\HttpClientUtility.csproj" />
-	</ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Deterministic>false</Deterministic>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+    <AssemblyVersion>8.$([System.DateTime]::UtcNow.ToString(yyMM)).$([System.DateTime]::UtcNow.ToString(ddHH)).$([System.DateTime]::UtcNow.ToString(mmss))</AssemblyVersion>
+    <UserSecretsId>10d9b312-219d-45ab-b486-f8a74e738cad</UserSecretsId>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="FastEndpoints" Version="6.0.0" />
+    <PackageReference Include="FastEndpoints.Attributes" Version="6.0.0" />
+    <PackageReference Include="FastEndpoints.Swagger" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GoogleMapsApi\GoogleMapsApi.csproj" />
+    <ProjectReference Include="..\HttpClientUtility\HttpClientUtility.csproj" />
+  </ItemGroup>
 </Project>
