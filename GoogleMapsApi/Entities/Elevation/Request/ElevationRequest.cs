@@ -1,8 +1,8 @@
 ﻿using GoogleMapsApi.Entities.Common;
-using HttpClientUtility.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WebSpark.HttpClientUtility;
 
 namespace GoogleMapsApi.Entities.Elevation.Request
 {

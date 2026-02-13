@@ -1,9 +1,8 @@
-﻿using HttpClientUtility.FullService;
-using HttpClientUtility.StringConverter;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
 using System.Net.Http;
+using WebSpark.HttpClientUtility.RequestResult;
 
 namespace GoogleMapsApi.Test.IntegrationTests
 {
@@ -17,7 +16,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
     {
         private readonly IConfigurationRoot Configuration;
         protected readonly IHttpClientFactory _httpClientFactory;
-        protected readonly IHttpClientFullService _httpClientService;
+        protected readonly IHttpRequestResultService _httpClientService;
 
         public BaseTestIntegration()
         {
@@ -32,7 +31,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             services.AddHttpClient();
             var serviceProvider = services.BuildServiceProvider();
             _httpClientFactory = serviceProvider.GetService<IHttpClientFactory>();
-            _httpClientService = new HttpClientService(_httpClientFactory, new NewtonsoftJsonStringConverter());
+            // _httpClientService = new HttpRequestResultService(_httpClientFactory, new NewtonsoftJsonStringConverter());
 
         }
         // Add check for null api and throw exception

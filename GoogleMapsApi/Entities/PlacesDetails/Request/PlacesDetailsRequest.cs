@@ -1,6 +1,6 @@
 ﻿using GoogleMapsApi.Entities.Common;
-using HttpClientUtility.Models;
 using System;
+using WebSpark.HttpClientUtility;
 
 namespace GoogleMapsApi.Entities.PlacesDetails.Request
 {

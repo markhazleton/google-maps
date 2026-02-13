@@ -1,7 +1,7 @@
 ﻿using GoogleMapsApi.Entities.Common;
-using HttpClientUtility.Models;
 using System;
 using System.Globalization;
+using WebSpark.HttpClientUtility;
 
 namespace GoogleMapsApi.Entities.PlacesNearBy.Request
 {

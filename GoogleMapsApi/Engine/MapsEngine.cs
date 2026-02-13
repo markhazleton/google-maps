@@ -1,4 +1,5 @@
 using GoogleMapsApi.Entities.Common;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
 using System.Threading;
@@ -17,6 +18,8 @@ namespace GoogleMapsApi.Engine
     {
         internal RawResponseReceivedDelegate OnRawResponseRecivied;
         internal new event UriCreatedDelegate OnUriCreated;
+
+        public MapsEngine(ILogger logger) : base(logger) { }
 
         /// <summary>
         /// Additional properties or methods specific to this engine can be defined here.

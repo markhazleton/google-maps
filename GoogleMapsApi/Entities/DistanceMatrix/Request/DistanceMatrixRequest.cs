@@ -2,9 +2,9 @@
 {
 
     using Common;
-    using HttpClientUtility.Models;
     using System;
     using System.Linq;
+    using WebSpark.HttpClientUtility;
 
     public class DistanceMatrixRequest : SignableRequest
     {

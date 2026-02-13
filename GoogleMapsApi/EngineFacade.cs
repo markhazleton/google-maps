@@ -1,9 +1,10 @@
 using GoogleMapsApi.Engine;
 using GoogleMapsApi.Entities.Common;
-using HttpClientUtility.FullService;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using WebSpark.HttpClientUtility.RequestResult;
 
 namespace GoogleMapsApi
 {
@@ -22,7 +23,10 @@ namespace GoogleMapsApi
 
         private EngineFacade()
         {
-            _mapsEngine = new MapsEngine<TRequest, TResponse>();
+            // Use minimal logger factory to avoid AddConsole issues
+            var loggerFactory = LoggerFactory.Create(builder => { });
+            var logger = loggerFactory.CreateLogger<MapsEngine<TRequest, TResponse>>();
+            _mapsEngine = new MapsEngine<TRequest, TResponse>(logger);
         }
 
         /// <summary>
@@ -55,12 +59,12 @@ namespace GoogleMapsApi
             }
         }
 
-        public Task<TResponse> QueryAsync(TRequest request, IHttpClientFullService service, CancellationToken token = default)
+        public Task<TResponse> QueryAsync(TRequest request, IHttpRequestResultService service, CancellationToken token = default)
         {
             return _mapsEngine.QueryGoogleAPIAsync(request, service, token);
         }
 
-        public Task<TResponse> QueryAsync(TRequest request, IHttpClientFullService service, TimeSpan timeout, CancellationToken token = default)
+        public Task<TResponse> QueryAsync(TRequest request, IHttpRequestResultService service, TimeSpan timeout, CancellationToken token = default)
         {
             return _mapsEngine.QueryGoogleAPIAsync(request, service, timeout, token);
         }

@@ -1,5 +1,5 @@
-﻿using HttpClientUtility.Models;
-using System;
+﻿using System;
+using WebSpark.HttpClientUtility;
 
 namespace GoogleMapsApi.Entities.Common;
 
