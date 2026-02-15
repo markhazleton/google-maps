@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net9.0</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <AssemblyName>GoogleMapsApi</AssemblyName>
@@ -12,6 +12,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/markhazleton/google-maps</RepositoryUrl>
     <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Title>GogleMapsApi</Title>
   </PropertyGroup>
@@ -29,7 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="WebSpark.HttpClientUtility" Version="1.0.10" />
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.0" />
   </ItemGroup>
 </Project>

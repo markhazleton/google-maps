@@ -1,16 +1,16 @@
-﻿using GoogleMapsApi.Entities.Common;
+using GoogleMapsApi.Entities.Common;
 using GoogleMapsApi.Entities.Elevation.Request;
 using GoogleMapsApi.Test.Utils;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace GoogleMapsApi.Test.IntegrationTests
 {
-    [TestFixture]
+    [TestClass]
     public class ElevationTests : BaseTestIntegration
     {
-        [Test]
+        [TestMethod]
         public async Task Elevation_ReturnsCorrectElevation()
         {
             var request = new ElevationRequest
@@ -26,7 +26,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             Assert.AreEqual(16.92, result.Results.First().Elevation, 1.0);
         }
 
-        [Test]
+        [TestMethod]
         public void ElevationAsync_ReturnsCorrectElevation()
         {
             var request = new ElevationRequest

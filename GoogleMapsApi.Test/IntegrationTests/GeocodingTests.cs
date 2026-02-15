@@ -1,7 +1,7 @@
-﻿using GoogleMapsApi.Entities.Common;
+using GoogleMapsApi.Entities.Common;
 using GoogleMapsApi.Entities.Geocoding.Request;
 using GoogleMapsApi.Test.Utils;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using System.Net.Http;
@@ -11,10 +11,10 @@ using Status = GoogleMapsApi.Entities.Geocoding.Response.Status;
 
 namespace GoogleMapsApi.Test.IntegrationTests
 {
-    [TestFixture]
+    [TestClass]
     public class GeocodingTests : BaseTestIntegration
     {
-        [Test]
+        [TestMethod]
         public async Task Geocoding_ReturnsCorrectLocation()
         {
             var request = new GeocodingRequest
@@ -28,10 +28,10 @@ namespace GoogleMapsApi.Test.IntegrationTests
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
             // 40.{*}, -73.{*}
-            StringAssert.IsMatch("40\\.\\d*,-73\\.\\d*", result.Results.First().Geometry.Location.LocationString);
+            StringAssert.Matches(result.Results.First().Geometry.Location.LocationString, new System.Text.RegularExpressions.Regex("40\\.\\d*,-73\\.\\d*"));
         }
 
-        [Test]
+        [TestMethod]
         public async Task GeocodingAsync_ReturnsCorrectLocation()
         {
             var request = new GeocodingRequest
@@ -45,27 +45,28 @@ namespace GoogleMapsApi.Test.IntegrationTests
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
             // 40.{*}, -73.{*}
-            StringAssert.IsMatch("40\\.\\d*,-73\\.\\d*", result.Results.First().Geometry.Location.LocationString);
+            StringAssert.Matches(result.Results.First().Geometry.Location.LocationString, new System.Text.RegularExpressions.Regex("40\\.\\d*,-73\\.\\d*"));
         }
 
-        [Test]
-        public void Geocoding_InvalidClientCredentials_Throws()
+        [TestMethod]
+        public async Task Geocoding_InvalidClientCredentials_Throws()
         {
             var request = new GeocodingRequest { Address = "285 Bedford Ave, Brooklyn, NY 11211, USA", ApiKey = ApiKey, ClientID = "gme-ThisIsAUnitTest", SigningKey = "AAECAwQFBgcICQoLDA0ODxAREhM=" };
 
-            Assert.ThrowsAsync<HttpRequestException>(() => GoogleMaps.Geocode.QueryAsync(request, _httpClientService));
+            await Assert.ThrowsExceptionAsync<HttpRequestException>(() => GoogleMaps.Geocode.QueryAsync(request, _httpClientService));
         }
 
-        [Test]
+        [TestMethod]
         public void GeocodingAsync_InvalidClientCredentials_Throws()
         {
             var request = new GeocodingRequest { Address = "285 Bedford Ave, Brooklyn, NY 11211, USA", ClientID = "gme-ThisIsAUnitTest", SigningKey = "AAECAwQFBgcICQoLDA0ODxAREhM=" };
 
-            Assert.Throws(Is.TypeOf<AggregateException>().And.InnerException.TypeOf<HttpRequestException>(),
+            var ex = Assert.ThrowsException<AggregateException>(
                           () => GoogleMaps.Geocode.QueryAsync(request, _httpClientService).Wait());
+            Assert.IsInstanceOfType(ex.InnerException, typeof(HttpRequestException));
         }
 
-        [Test]
+        [TestMethod]
         public void GeocodingAsync_Cancel_Throws()
         {
             var request = new GeocodingRequest { Address = "285 Bedford Ave, Brooklyn, NY 11211, USA" };
@@ -74,11 +75,12 @@ namespace GoogleMapsApi.Test.IntegrationTests
             var task = GoogleMaps.Geocode.QueryAsync(request, _httpClientService, tokeSource.Token);
             tokeSource.Cancel();
 
-            Assert.Throws(Is.TypeOf<AggregateException>().And.InnerException.TypeOf<HttpRequestException>(),
+            var ex = Assert.ThrowsException<AggregateException>(
                 () => task.Wait());
+            Assert.IsInstanceOfType(ex.InnerException, typeof(HttpRequestException));
         }
 
-        [Test]
+        [TestMethod]
         public void GeocodingAsync_WithPreCanceledToken_Cancels()
         {
             var request = new GeocodingRequest { Address = "285 Bedford Ave, Brooklyn, NY 11211, USA" };
@@ -87,11 +89,12 @@ namespace GoogleMapsApi.Test.IntegrationTests
 
             var task = GoogleMaps.Geocode.QueryAsync(request, _httpClientService, cts.Token);
 
-            Assert.Throws(Is.TypeOf<AggregateException>().And.InnerException.TypeOf<HttpRequestException>(),
+            var ex = Assert.ThrowsException<AggregateException>(
                             () => task.Wait());
+            Assert.IsInstanceOfType(ex.InnerException, typeof(HttpRequestException));
         }
 
-        [Test]
+        [TestMethod]
         public async Task ReverseGeocoding_LatLng_ReturnsCorrectAddress()
         {
             var request = new GeocodingRequest
@@ -107,7 +110,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             StringAssert.Contains("Bedford Ave, Brooklyn, NY 11211, USA", result.Results.First().FormattedAddress);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ReverseGeocoding_PlaceId_ReturnsCorrectAddress()
         {
             var request = new GeocodingRequest
@@ -123,7 +126,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             StringAssert.Contains("Bedford Ave, Brooklyn, NY 11211, USA", result.Results.First().FormattedAddress);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ReverseGeocoding_PlaceIdAndRegion_ReturnsCorrectAddress()
         {
             var request = new GeocodingRequest
@@ -140,7 +143,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             StringAssert.Contains("Bedford Ave, Brooklyn, NY 11211, USA", result.Results.First().FormattedAddress);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ReverseGeocoding_PlaceIdAndBounds_ReturnsCorrectAddress()
         {
             var request = new GeocodingRequest
@@ -161,7 +164,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             StringAssert.Contains("Bedford Ave, Brooklyn, NY 11211, USA", result.Results.First().FormattedAddress);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ReverseGeocoding_PlaceIdAndComponents_ReturnsCorrectAddress()
         {
             var request = new GeocodingRequest
@@ -178,7 +181,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             StringAssert.Contains("Bedford Ave, Brooklyn, NY 11211, USA", result.Results.First().FormattedAddress);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ReverseGeocoding_PlaceIdAndAddress_ReturnsCorrectAddress()
         {
             var request = new GeocodingRequest
@@ -195,7 +198,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             StringAssert.Contains("Bedford Ave, Brooklyn, NY 11211, USA", result.Results.First().FormattedAddress);
         }
 
-        [Test]
+        [TestMethod]
         public void ReverseGeocodingAsync_ReturnsCorrectAddress()
         {
             var request = new GeocodingRequest

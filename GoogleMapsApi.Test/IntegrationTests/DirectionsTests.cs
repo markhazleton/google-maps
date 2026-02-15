@@ -1,17 +1,17 @@
-﻿using GoogleMapsApi.Entities.Directions.Request;
+using GoogleMapsApi.Entities.Directions.Request;
 using GoogleMapsApi.Entities.Directions.Response;
 using GoogleMapsApi.Test.Utils;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace GoogleMapsApi.Test.IntegrationTests;
 
-[TestFixture]
+[TestClass]
 public class DirectionsTests : BaseTestIntegration
 {
-    [Test]
+    [TestMethod]
     public async Task Directions_SumOfStepDistancesCorrect()
     {
         var request = new DirectionsRequest
@@ -24,10 +24,10 @@ public class DirectionsTests : BaseTestIntegration
 
         AssertInconclusive.NotExceedQuota(result);
         Assert.AreEqual(DirectionsStatusCodes.OK, result.Status, result.ErrorMessage);
-        Assert.Greater(result.Routes.First().Legs.First().Steps.Sum(s => s.Distance.Value), 100);
+        Assert.IsTrue(result.Routes.First().Legs.First().Steps.Sum(s => s.Distance.Value) > 100);
     }
 
-    [Test]
+    [TestMethod]
     public async Task Directions_ErrorMessage()
     {
         var request = new DirectionsRequest
@@ -41,10 +41,10 @@ public class DirectionsTests : BaseTestIntegration
         AssertInconclusive.NotExceedQuota(result);
         Assert.AreEqual(DirectionsStatusCodes.REQUEST_DENIED, result.Status);
         Assert.IsNotNull(result.ErrorMessage);
-        Assert.IsNotEmpty(result.ErrorMessage);
+        Assert.IsTrue(result.ErrorMessage.Any());
     }
 
-    [Test]
+    [TestMethod]
     public async Task Directions_WithWayPoints()
     {
         var request = new DirectionsRequest { Origin = "NYC, USA", Destination = "Miami, USA", Waypoints = ["Philadelphia, USA"], OptimizeWaypoints = true, ApiKey = ApiKey };
@@ -56,7 +56,7 @@ public class DirectionsTests : BaseTestIntegration
 
         StringAssert.Contains("Philadelphia", result.Routes.First().Legs.First().EndAddress);
     }
-    [Test]
+    [TestMethod]
     public async Task Directions_ExceedingRouteLength()
     {
         var request = new DirectionsRequest
@@ -86,7 +86,7 @@ public class DirectionsTests : BaseTestIntegration
         Assert.AreEqual(DirectionsStatusCodes.MAX_ROUTE_LENGTH_EXCEEDED, result.Status, result.ErrorMessage);
     }
 
-    [Test]
+    [TestMethod]
     public async Task Directions_Correct_OverviewPath()
     {
         var request = new DirectionsRequest
@@ -105,10 +105,10 @@ public class DirectionsTests : BaseTestIntegration
 
         Assert.AreEqual(DirectionsStatusCodes.OK, result.Status, result.ErrorMessage);
         Assert.AreEqual(122, overviewPath.Points.Count(), 30);
-        Assert.Greater(polyline.Points.Count(), 1);
+        Assert.IsTrue(polyline.Points.Count() > 1);
     }
 
-    [Test]
+    [TestMethod]
     public void DirectionsAsync_SumOfStepDistancesCorrect()
     {
         var request = new DirectionsRequest { Origin = "285 Bedford Ave, Brooklyn, NY, USA", Destination = "185 Broadway Ave, Manhattan, NY, USA", ApiKey = ApiKey };
@@ -117,11 +117,11 @@ public class DirectionsTests : BaseTestIntegration
 
         AssertInconclusive.NotExceedQuota(result);
         Assert.AreEqual(DirectionsStatusCodes.OK, result.Status, result.ErrorMessage);
-        Assert.Greater(result.Routes.First().Legs.First().Steps.Sum(s => s.Distance.Value), 100);
+        Assert.IsTrue(result.Routes.First().Legs.First().Steps.Sum(s => s.Distance.Value) > 100);
     }
 
     //The sub_steps differes between google docs documentation and implementation. We use it as google implemented, so we have test to make sure it's not broken.
-    [Test]
+    [TestMethod]
     public async Task Directions_VerifysubSteps()
     {
         var request = new DirectionsRequest
@@ -140,10 +140,10 @@ public class DirectionsTests : BaseTestIntegration
         var leg = route.Legs.First();
         var step = leg.Steps.First();
 
-        Assert.NotNull(step);
+        Assert.IsNotNull(step);
     }
 
-    [Test]
+    [TestMethod]
     public async Task Directions_VerifyBounds()
     {
         var request = new DirectionsRequest
@@ -160,17 +160,17 @@ public class DirectionsTests : BaseTestIntegration
 
         var route = result.Routes.First();
 
-        Assert.NotNull(route);
-        Assert.NotNull(route.Bounds);
-        Assert.Greater(route.Bounds.NorthEast.Latitude, 50);
-        Assert.Greater(route.Bounds.NorthEast.Longitude, 3);
-        Assert.Greater(route.Bounds.SouthWest.Latitude, 50);
-        Assert.Greater(route.Bounds.SouthWest.Longitude, 3);
-        Assert.Greater(route.Bounds.Center.Latitude, 50);
-        Assert.Greater(route.Bounds.Center.Longitude, 3);
+        Assert.IsNotNull(route);
+        Assert.IsNotNull(route.Bounds);
+        Assert.IsTrue(route.Bounds.NorthEast.Latitude > 50);
+        Assert.IsTrue(route.Bounds.NorthEast.Longitude > 3);
+        Assert.IsTrue(route.Bounds.SouthWest.Latitude > 50);
+        Assert.IsTrue(route.Bounds.SouthWest.Longitude > 3);
+        Assert.IsTrue(route.Bounds.Center.Latitude > 50);
+        Assert.IsTrue(route.Bounds.Center.Longitude > 3);
     }
 
-    [Test]
+    [TestMethod]
     public async Task Directions_WithIcons()
     {
         var dep_time = DateTime.Today
@@ -196,14 +196,14 @@ public class DirectionsTests : BaseTestIntegration
         var leg = route.Legs.First();
         var steps = leg.Steps;
 
-        Assert.IsNotEmpty(steps.Where(s =>
+        Assert.IsTrue(steps.Where(s =>
             s.TransitDetails?
             .Lines?
             .Vehicle?
-            .Icon != null));
+            .Icon != null).Any());
     }
 
-    [Test]
+    [TestMethod]
     public async Task Directions_WithRegionSearch()
     {
         var dep_time = DateTime.Today
@@ -223,11 +223,11 @@ public class DirectionsTests : BaseTestIntegration
         DirectionsResponse result = await GoogleMaps.Directions.QueryAsync(request, _httpClientService);
 
         AssertInconclusive.NotExceedQuota(result);
-        Assert.IsNotEmpty(result.Routes);
-        Assert.True(result.Status.Equals(DirectionsStatusCodes.OK));
+        Assert.IsTrue(result.Routes.Any());
+        Assert.IsTrue(result.Status.Equals(DirectionsStatusCodes.OK));
     }
 
-    [Test]
+    [TestMethod]
     public async Task Directions_CanGetDurationWithTraffic()
     {
         var request = new DirectionsRequest
@@ -248,8 +248,8 @@ public class DirectionsTests : BaseTestIntegration
         Assert.AreNotEqual(result.Routes.First().Legs.Sum(s => s.Duration.Value.TotalSeconds), result.Routes.First().Legs.Sum(s => s.DurationInTraffic.Value.TotalSeconds));
     }
 
-    [Test]
-    public void Directions_CanGetLongDistanceTrain()
+    [TestMethod]
+    public async Task Directions_CanGetLongDistanceTrain()
     {
         var request = new DirectionsRequest
         {
@@ -259,6 +259,7 @@ public class DirectionsTests : BaseTestIntegration
             DepartureTime = new DateTime(2018, 08, 18, 15, 30, 00)
         };
 
-        Assert.DoesNotThrowAsync(async () => await GoogleMaps.Directions.QueryAsync(request, _httpClientService));
+        // If this throws, the test will fail
+        await GoogleMaps.Directions.QueryAsync(request, _httpClientService);
     }
 }

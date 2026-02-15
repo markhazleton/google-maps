@@ -1,17 +1,17 @@
-﻿using GoogleMapsApi.Entities.Common;
+using GoogleMapsApi.Entities.Common;
 using GoogleMapsApi.Entities.PlacesDetails.Request;
 using GoogleMapsApi.Entities.PlacesDetails.Response;
 using GoogleMapsApi.Test.Utils;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace GoogleMapsApi.Test.IntegrationTests
 {
-    [TestFixture]
+    [TestClass]
     public class PlacesDetailsTests : BaseTestIntegration
     {
-        [Test]
+        [TestMethod]
         public async Task ReturnsPhotos()
         {
             var request = new PlacesDetailsRequest
@@ -24,10 +24,10 @@ namespace GoogleMapsApi.Test.IntegrationTests
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
-            Assert.IsNotEmpty(result.Result.Photos);
+            Assert.IsTrue(result.Result.Photos.Any());
         }
 
-        [Test]
+        [TestMethod]
         public async Task ReturnsNotFoundForWrongReferenceString()
         {
             var request = new PlacesDetailsRequest
@@ -45,7 +45,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
 
         readonly PriceLevel[] anyPriceLevel = [PriceLevel.Free, PriceLevel.Inexpensive, PriceLevel.Moderate, PriceLevel.Expensive, PriceLevel.VeryExpensive];
 
-        [Test]
+        [TestMethod]
         public async Task ReturnsStronglyTypedPriceLevel()
         {
             var request = new PlacesDetailsRequest
@@ -58,10 +58,10 @@ namespace GoogleMapsApi.Test.IntegrationTests
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
-            Assert.That(new PriceLevel[] { result.Result.PriceLevel.Value }, Is.SubsetOf(anyPriceLevel));
+            Assert.IsTrue(anyPriceLevel.Contains(result.Result.PriceLevel.Value));
         }
 
-        [Test]
+        [TestMethod]
         public async Task ReturnsOpeningTimes()
         {
             var request = new PlacesDetailsRequest
@@ -79,11 +79,11 @@ namespace GoogleMapsApi.Test.IntegrationTests
             /*
             Assert.AreEqual(7, result.Result.OpeningHours.Periods.Count());
             var sundayPeriod = result.Result.OpeningHours.Periods.First();
-            Assert.That(sundayPeriod.OpenTime.Day, Is.EqualTo(DayOfWeek.Sunday));
-            Assert.That(sundayPeriod.OpenTime.Time, Is.GreaterThanOrEqualTo(0));
-            Assert.That(sundayPeriod.OpenTime.Time, Is.LessThanOrEqualTo(2359));
-            Assert.That(sundayPeriod.CloseTime.Time, Is.GreaterThanOrEqualTo(0));
-            Assert.That(sundayPeriod.CloseTime.Time, Is.LessThanOrEqualTo(2359));
+            Assert.AreEqual(DayOfWeek.Sunday, sundayPeriod.OpenTime.Day);
+            Assert.IsTrue(sundayPeriod.OpenTime.Time >= 0);
+            Assert.IsTrue(sundayPeriod.OpenTime.Time <= 2359);
+            Assert.IsTrue(sundayPeriod.CloseTime.Time >= 0);
+            Assert.IsTrue(sundayPeriod.CloseTime.Time <= 2359);
              */
         }
 

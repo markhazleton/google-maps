@@ -1,8 +1,8 @@
-﻿using GoogleMapsApi.Entities.Common;
+using GoogleMapsApi.Entities.Common;
 using GoogleMapsApi.Entities.Places.Request;
 using GoogleMapsApi.Entities.Places.Response;
 using GoogleMapsApi.Test.Utils;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using System.Threading;
@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace GoogleMapsApi.Test.IntegrationTests
 {
-    [TestFixture]
+    [TestClass]
     public class PlacesSearchTests : BaseTestIntegration
     {
-        [Test]
+        [TestMethod]
         public async Task ReturnsNearbySearchRequest()
         {
             var request = new PlacesRequest
@@ -31,7 +31,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             Assert.IsTrue(result.Results.Count() > 5);
         }
 
-        [Test]
+        [TestMethod]
         [Ignore("Need to fix it")]
         public async Task TestNearbySearchType()
         {
@@ -51,7 +51,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             Assert.IsTrue(result.Results.Any(t => t.Name.Contains("John F. Kennedy")));
         }
 
-        [Test]
+        [TestMethod]
         public async Task TestNearbySearchPagination()
         {
             var request = new PlacesRequest

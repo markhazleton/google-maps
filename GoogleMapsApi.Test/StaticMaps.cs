@@ -2,7 +2,7 @@ using GoogleMapsApi.Entities.Common;
 using GoogleMapsApi.StaticMaps;
 using GoogleMapsApi.StaticMaps.Entities;
 using GoogleMapsApi.StaticMaps.Enums;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
 namespace GoogleMapsApi.Test
@@ -10,10 +10,10 @@ namespace GoogleMapsApi.Test
     /// <summary>
     /// Tests examples from - http://code.google.com/apis/maps/documentation/staticmaps/
     /// </summary>
-    [TestFixture]
+    [TestClass]
     public class StaticMaps
     {
-        [Test(Description = "First basic example")]
+        [TestMethod]
         public void BasicTest()
         {
             // downtown New York City
@@ -51,7 +51,7 @@ namespace GoogleMapsApi.Test
             Assert.AreEqual(expectedResult, generateStaticMapURL);
         }
 
-        [Test]
+        [TestMethod]
         public void AddressTest()
         {
             var request = new StaticMapRequest(new AddressLocation("Berkeley,CA"), 14, new ImageSize(400, 400));
@@ -63,7 +63,7 @@ namespace GoogleMapsApi.Test
             Assert.AreEqual(expectedResult, generateStaticMapURL);
         }
 
-        [Test]
+        [TestMethod]
         public void ZoomLevels()
         {
             var request = new StaticMapRequest(new Location(40.714728, -73.998672), 12, new ImageSize(400, 400));
@@ -75,7 +75,7 @@ namespace GoogleMapsApi.Test
             Assert.AreEqual(expectedResult, generateStaticMapURL);
         }
 
-        [Test]
+        [TestMethod]
         public void ImageSize()
         {
             var request = new StaticMapRequest(new Location(0, 0), 1, new ImageSize(400, 50));
@@ -88,7 +88,7 @@ namespace GoogleMapsApi.Test
         }
 
 
-        [Test]
+        [TestMethod]
         public void MapTypes()
         {
             var request = new StaticMapRequest(new Location(40.714728, -73.998672), 12, new ImageSize(400, 400))

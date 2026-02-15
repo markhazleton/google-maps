@@ -1,17 +1,17 @@
-﻿using GoogleMapsApi.Entities.PlaceAutocomplete.Request;
+using GoogleMapsApi.Entities.PlaceAutocomplete.Request;
 using GoogleMapsApi.Entities.PlaceAutocomplete.Response;
 using GoogleMapsApi.Test.Utils;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace GoogleMapsApi.Test.IntegrationTests
 {
-    [TestFixture]
+    [TestClass]
     class PlaceAutocompleteTests : BaseTestIntegration
     {
-        [Test]
+        [TestMethod]
         public async Task ReturnsNoResults()
         {
             var request = new PlaceAutocompleteRequest
@@ -28,7 +28,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             Assert.AreEqual(Status.ZERO_RESULTS, result.Status);
         }
 
-        [Test]
+        [TestMethod]
         public async Task OffsetTest()
         {
             var request = new PlaceAutocompleteRequest
@@ -57,7 +57,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             Assert.AreEqual(Status.OK, offsetResult.Status, "results using offset");
         }
 
-        [Test]
+        [TestMethod]
         public async Task TypeTest()
         {
             var request = new PlaceAutocompleteRequest
@@ -82,8 +82,9 @@ namespace GoogleMapsApi.Test.IntegrationTests
         }
 
 
-        [TestCase("oakfield road, chea", "CHEADLE")]
-        [TestCase("128 abbey r", "MACCLESFIELD")]
+        [DataRow("oakfield road, chea", "CHEADLE")]
+        [DataRow("128 abbey r", "MACCLESFIELD")]
+        [DataTestMethod]
         public async Task CheckForExpectedRoad(string aSearch, string anExpected)
         {
             var request = new PlaceAutocompleteRequest
@@ -99,10 +100,10 @@ namespace GoogleMapsApi.Test.IntegrationTests
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreNotEqual(Status.ZERO_RESULTS, result.Status);
 
-            Assert.That(result.Results.Any(t => t.Description.ToUpper().Contains(anExpected)));
+            Assert.IsTrue(result.Results.Any(t => t.Description.ToUpper().Contains(anExpected)));
         }
 
-        [Test(Description = "Ensures that it is ok to sent 0 as a radius value")]
+        [TestMethod]
         public async Task CheckZeroRadius()
         {
             var request = CreatePlaceAutocompleteRequest("RIX", 0);
@@ -110,7 +111,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreNotEqual(Status.ZERO_RESULTS, result.Status);
         }
-        [Test(Description = "Ensures that it is ok to sent negative value as a radius")]
+        [TestMethod]
         public async Task CheckNegativeRadius()
         {
             var request = CreatePlaceAutocompleteRequest("RIX", -1);
@@ -119,7 +120,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             Assert.AreNotEqual(Status.ZERO_RESULTS, result.Status);
         }
 
-        [Test(Description = "Ensures that it is ok to sent huge value as a radius")]
+        [TestMethod]
         public async Task CheckLargerThenEarthRadius()
         {
             var request = CreatePlaceAutocompleteRequest("RIX", 30000000);

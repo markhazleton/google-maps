@@ -4,6 +4,28 @@
 
 This project is a fork of the original Google Maps Web Services API wrapper for .NET (https://github.com/maximn/google-maps), extended to include a minimal API using Fast Endpoints and a refactor of the `HttpClient` usage. By introducing a standalone project named `HttpClientUtility`, we've employed generics to decouple `HttpClient` management from the Google API mapping, enhancing modularity and maintainability.
 
+## Prerequisites
+
+- .NET 10 SDK or later ([Download](https://dotnet.microsoft.com/download/dotnet/10.0))
+- Visual Studio 2022 (17.10+) or JetBrains Rider 2024.1+
+- Azure subscription (for deployment)
+
+## Building
+
+```powershell
+dotnet build GoogleMapsApi.sln --configuration Release
+```
+
+## Testing
+
+This project uses MSTest as the testing framework.
+
+```powershell
+dotnet test --configuration Release
+```
+
+**Note**: Integration tests run against the real Google API web servers and count towards your query limit. A working internet connection is required, and test run time may vary depending on network conditions and Google's server load.
+
 ## Changes in this Fork
 
 ### **Minimal API with Fast Endpoints**

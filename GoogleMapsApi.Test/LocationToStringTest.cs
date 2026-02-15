@@ -1,12 +1,12 @@
 using GoogleMapsApi.Entities.Common;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GoogleMapsApi.Test
 {
-    [TestFixture]
+    [TestClass]
     public class LocationToStringTest
     {
-        [Test]
+        [TestMethod]
         public void WhenNearZeroLongitude_ExpectCorrectToString()
         {
             // Longitude of 0.000009 is converted to 9E-06 using Invariant ToString, but we need 0.000009
@@ -14,7 +14,7 @@ namespace GoogleMapsApi.Test
             Assert.AreEqual("57.231,0.000009", location.ToString());
         }
 
-        [Test]
+        [TestMethod]
         public void WhenZeroLongitude_ExpectCorrectToString()
         {
             // Longitude of 0.000009 is converted to 9E-06 using Invariant ToString, but we need 0.000009

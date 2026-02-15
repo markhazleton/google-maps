@@ -1,16 +1,16 @@
-﻿using GoogleMapsApi.Entities.Common;
+using GoogleMapsApi.Entities.Common;
 using GoogleMapsApi.Entities.TimeZone.Request;
 using GoogleMapsApi.Entities.TimeZone.Response;
 using GoogleMapsApi.Test.Utils;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
 namespace GoogleMapsApi.Test.IntegrationTests
 {
-    [TestFixture]
+    [TestClass]
     public class TimeZoneTests : BaseTestIntegration
     {
-        [Test]
+        [TestMethod]
         [Ignore("Need to fix it")]
         public async Task TimeZone_Correct_OverviewPath()
         {

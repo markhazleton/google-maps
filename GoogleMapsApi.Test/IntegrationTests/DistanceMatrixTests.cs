@@ -1,7 +1,7 @@
-﻿using GoogleMapsApi.Entities.DistanceMatrix.Request;
+using GoogleMapsApi.Entities.DistanceMatrix.Request;
 using GoogleMapsApi.Entities.DistanceMatrix.Response;
 using GoogleMapsApi.Test.Utils;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace GoogleMapsApi.Test.IntegrationTests;
 
 
-[TestFixture]
+[TestClass]
 public class DistanceMatrixTests : BaseTestIntegration
 {
 
-    [Test]
+    [TestMethod]
     public async Task ShouldReturnValidValueWhenOneOriginAndOneDestinationsSpeciefed()
     {
         var request = new DistanceMatrixRequest
@@ -29,16 +29,16 @@ public class DistanceMatrixTests : BaseTestIntegration
         Assert.AreEqual(DistanceMatrixStatusCodes.OK, result.Status, result.ErrorMessage);
         CollectionAssert.AreEqual(
             new[] { "Alter Sirksfelder Weg 10, 23881 Koberg, Germany" },
-            result.DestinationAddresses);
+            result.DestinationAddresses.ToArray());
         CollectionAssert.AreEqual(
             new[] { "St2154 18, 92726 Waidhaus, Germany" },
-            result.OriginAddresses);
+            result.OriginAddresses.ToArray());
         Assert.AreEqual(DistanceMatrixElementStatusCodes.OK, result.Rows.First().Elements.First().Status);
         Assert.IsNotNull(result.Rows.First().Elements.First().Distance);
         Assert.IsNotNull(result.Rows.First().Elements.First().Duration);
     }
 
-    [Test]
+    [TestMethod]
     public async Task ShouldReturnValidValueWhenTwoOriginsSpecified()
     {
         var request = new DistanceMatrixRequest
@@ -54,16 +54,16 @@ public class DistanceMatrixTests : BaseTestIntegration
         Assert.AreEqual(DistanceMatrixStatusCodes.OK, result.Status, result.ErrorMessage);
         CollectionAssert.AreEqual(
             new[] { "Alter Sirksfelder Weg 10, 23881 Koberg, Germany" },
-            result.DestinationAddresses);
+            result.DestinationAddresses.ToArray());
         CollectionAssert.AreEqual(
             new[] { "St2154 18, 92726 Waidhaus, Germany", "Böhmerwaldstraße 19, 93444 Bad Kötzting, Germany" },
-            result.OriginAddresses);
+            result.OriginAddresses.ToArray());
         Assert.AreEqual(2, result.Rows.Count());
         Assert.AreEqual(DistanceMatrixElementStatusCodes.OK, result.Rows.First().Elements.First().Status);
         Assert.AreEqual(DistanceMatrixElementStatusCodes.OK, result.Rows.Last().Elements.First().Status);
     }
 
-    [Test]
+    [TestMethod]
     public async Task ShouldReturnDurationInTrafficWhenDepartureTimeAndApiKeySpecified()
     {
         var request = new DistanceMatrixRequest
@@ -82,8 +82,8 @@ public class DistanceMatrixTests : BaseTestIntegration
         Assert.IsNotNull(result.Rows.First().Elements.First().DurationInTraffic);
     }
 
-    [Test]
-    public void ShouldThrowExceptionWhenDepartureTimeAndArrivalTimeSpecified()
+    [TestMethod]
+    public async Task ShouldThrowExceptionWhenDepartureTimeAndArrivalTimeSpecified()
     {
         var request = new DistanceMatrixRequest
         {
@@ -95,11 +95,11 @@ public class DistanceMatrixTests : BaseTestIntegration
             Destinations = ["53.64308,10.52726"],
         };
 
-        Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
+        await Assert.ThrowsExceptionAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
     }
 
-    [Test]
-    public void ShouldThrowExceptionWhenArrivalTimeSpecifiedForNonTransitModes()
+    [TestMethod]
+    public async Task ShouldThrowExceptionWhenArrivalTimeSpecifiedForNonTransitModes()
     {
         var request = new DistanceMatrixRequest
         {
@@ -110,11 +110,11 @@ public class DistanceMatrixTests : BaseTestIntegration
             Destinations = ["53.64308,10.52726"],
         };
 
-        Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
+        await Assert.ThrowsExceptionAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
     }
 
-    [Test]
-    public void ShouldThrowExceptionWheTransitRoutingPreferenceSpecifiedForNonTransitModes()
+    [TestMethod]
+    public async Task ShouldThrowExceptionWheTransitRoutingPreferenceSpecifiedForNonTransitModes()
     {
         var request = new DistanceMatrixRequest
         {
@@ -125,11 +125,11 @@ public class DistanceMatrixTests : BaseTestIntegration
             Destinations = ["53.64308,10.52726"],
         };
 
-        Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
+        await Assert.ThrowsExceptionAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
     }
 
-    [Test]
-    public void ShouldThrowExceptionWhenTrafficModelSuppliedForNonDrivingMode()
+    [TestMethod]
+    public async Task ShouldThrowExceptionWhenTrafficModelSuppliedForNonDrivingMode()
     {
         var request = new DistanceMatrixRequest
         {
@@ -141,11 +141,11 @@ public class DistanceMatrixTests : BaseTestIntegration
             Destinations = ["53.64308,10.52726"],
         };
 
-        Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
+        await Assert.ThrowsExceptionAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
     }
 
-    [Test]
-    public void ShouldThrowExceptionWhenTrafficModelSuppliedWithoutDepartureTime()
+    [TestMethod]
+    public async Task ShouldThrowExceptionWhenTrafficModelSuppliedWithoutDepartureTime()
     {
         var request = new DistanceMatrixRequest
         {
@@ -156,11 +156,11 @@ public class DistanceMatrixTests : BaseTestIntegration
             Destinations = ["53.64308,10.52726"],
         };
 
-        Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
+        await Assert.ThrowsExceptionAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
     }
 
-    [Test]
-    public void ShouldThrowExceptionWhenTransitModesSuppliedForNonTransitMode()
+    [TestMethod]
+    public async Task ShouldThrowExceptionWhenTransitModesSuppliedForNonTransitMode()
     {
         var request = new DistanceMatrixRequest
         {
@@ -171,10 +171,10 @@ public class DistanceMatrixTests : BaseTestIntegration
             Destinations = ["53.64308,10.52726"],
         };
 
-        Assert.ThrowsAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
+        await Assert.ThrowsExceptionAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
     }
 
-    [Test]
+    [TestMethod]
     public async Task ShouldReturnImperialUnitsIfImperialPassedAsParameter()
     {
         var request = new DistanceMatrixRequest
@@ -188,10 +188,10 @@ public class DistanceMatrixTests : BaseTestIntegration
         var result = await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService);
 
         AssertInconclusive.NotExceedQuota(result);
-        Assert.True(result.Rows.First().Elements.First().Distance.Text.Contains("mi"));
+        Assert.IsTrue(result.Rows.First().Elements.First().Distance.Text.Contains("mi"));
     }
 
-    [Test]
+    [TestMethod]
     [Ignore("Need to fix it")]
     public async Task ShouldReplaceUriViaOnUriCreated()
     {
@@ -225,7 +225,7 @@ public class DistanceMatrixTests : BaseTestIntegration
         }
     }
 
-    [Test]
+    [TestMethod]
     [Ignore("Need to fix it")]
     public async Task ShouldPassRawDataToOnRawResponseRecivied()
     {
@@ -247,7 +247,7 @@ public class DistanceMatrixTests : BaseTestIntegration
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(DistanceMatrixStatusCodes.OK, result.Status, result.ErrorMessage);
-            CollectionAssert.IsNotEmpty(rawData);
+            Assert.IsTrue(rawData.Any());
         }
         finally
         {

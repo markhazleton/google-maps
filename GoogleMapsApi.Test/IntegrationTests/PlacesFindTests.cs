@@ -1,16 +1,16 @@
-﻿using GoogleMapsApi.Entities.PlacesFind.Request;
+using GoogleMapsApi.Entities.PlacesFind.Request;
 using GoogleMapsApi.Entities.PlacesFind.Response;
 using GoogleMapsApi.Test.Utils;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace GoogleMapsApi.Test.IntegrationTests
 {
-    [TestFixture]
+    [TestClass]
     public class PlacesFindTests : BaseTestIntegration
     {
-        [Test]
+        [TestMethod]
         public async Task ReturnsResults()
         {
             var request = new PlacesFindRequest
@@ -24,10 +24,10 @@ namespace GoogleMapsApi.Test.IntegrationTests
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
-            Assert.IsNotEmpty(result.Candidates);
+            Assert.IsTrue(result.Candidates.Any());
         }
 
-        [Test]
+        [TestMethod]
         public async Task DoesNotReturnFieldsWhenNotRequested()
         {
             var request = new PlacesFindRequest
@@ -41,7 +41,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             PlacesFindResponse result = await GoogleMaps.PlacesFind.QueryAsync(request, _httpClientService);
 
             //FormattedAddress should be null since it wasn't requested
-            Assert.IsNotEmpty(result.Candidates);
+            Assert.IsTrue(result.Candidates.Any());
             Assert.IsNull(result.Candidates.FirstOrDefault()?.FormattedAddress);
         }
     }

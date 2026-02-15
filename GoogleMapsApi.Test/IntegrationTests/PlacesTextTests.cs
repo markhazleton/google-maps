@@ -1,16 +1,16 @@
-﻿using GoogleMapsApi.Entities.PlacesText.Request;
+using GoogleMapsApi.Entities.PlacesText.Request;
 using GoogleMapsApi.Entities.PlacesText.Response;
 using GoogleMapsApi.Test.Utils;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace GoogleMapsApi.Test.IntegrationTests
 {
-    [TestFixture]
+    [TestClass]
     public class PlacesTextTests : BaseTestIntegration
     {
-        [Test]
+        [TestMethod]
         public async Task ReturnsFormattedAddress()
         {
             var request = new PlacesTextRequest
@@ -27,7 +27,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
             Assert.AreEqual("1 Smith St, Parramatta NSW 2150, Australia", result.Results.First().FormattedAddress);
         }
 
-        [Test]
+        [TestMethod]
         public async Task ReturnsPhotos()
         {
             var request = new PlacesTextRequest
@@ -41,7 +41,8 @@ namespace GoogleMapsApi.Test.IntegrationTests
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
-            Assert.That(result.Results, Is.Not.Null.And.Not.Empty);
+            Assert.IsNotNull(result.Results);
+            Assert.IsTrue(result.Results.Any());
         }
     }
 }
