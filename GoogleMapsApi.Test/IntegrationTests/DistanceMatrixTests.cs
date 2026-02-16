@@ -95,7 +95,15 @@ public class DistanceMatrixTests : BaseTestIntegration
             Destinations = ["53.64308,10.52726"],
         };
 
-        await Assert.ThrowsExceptionAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
+        try
+        {
+            await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService);
+            Assert.Fail("Expected ArgumentException was not thrown.");
+        }
+        catch (ArgumentException)
+        {
+            // Expected exception
+        }
     }
 
     [TestMethod]
@@ -110,7 +118,15 @@ public class DistanceMatrixTests : BaseTestIntegration
             Destinations = ["53.64308,10.52726"],
         };
 
-        await Assert.ThrowsExceptionAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
+        try
+        {
+            await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService);
+            Assert.Fail("Expected ArgumentException was not thrown.");
+        }
+        catch (ArgumentException)
+        {
+            // Expected exception
+        }
     }
 
     [TestMethod]
@@ -125,7 +141,15 @@ public class DistanceMatrixTests : BaseTestIntegration
             Destinations = ["53.64308,10.52726"],
         };
 
-        await Assert.ThrowsExceptionAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
+        try
+        {
+            await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService);
+            Assert.Fail("Expected ArgumentException was not thrown.");
+        }
+        catch (ArgumentException)
+        {
+            // Expected exception
+        }
     }
 
     [TestMethod]
@@ -141,7 +165,15 @@ public class DistanceMatrixTests : BaseTestIntegration
             Destinations = ["53.64308,10.52726"],
         };
 
-        await Assert.ThrowsExceptionAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
+        try
+        {
+            await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService);
+            Assert.Fail("Expected ArgumentException was not thrown.");
+        }
+        catch (ArgumentException)
+        {
+            // Expected exception
+        }
     }
 
     [TestMethod]
@@ -156,7 +188,15 @@ public class DistanceMatrixTests : BaseTestIntegration
             Destinations = ["53.64308,10.52726"],
         };
 
-        await Assert.ThrowsExceptionAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
+        try
+        {
+            await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService);
+            Assert.Fail("Expected ArgumentException was not thrown.");
+        }
+        catch (ArgumentException)
+        {
+            // Expected exception
+        }
     }
 
     [TestMethod]
@@ -171,7 +211,15 @@ public class DistanceMatrixTests : BaseTestIntegration
             Destinations = ["53.64308,10.52726"],
         };
 
-        await Assert.ThrowsExceptionAsync<ArgumentException>(() => GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService));
+        try
+        {
+            await GoogleMaps.DistanceMatrix.QueryAsync(request, _httpClientService);
+            Assert.Fail("Expected ArgumentException was not thrown.");
+        }
+        catch (ArgumentException)
+        {
+            // Expected exception
+        }
     }
 
     [TestMethod]

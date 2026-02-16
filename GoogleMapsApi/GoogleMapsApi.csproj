@@ -25,14 +25,13 @@
     <IncludeSymbols>false</IncludeSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <None
-      Include="Entities\Directions\The Google Directions API - Google Maps API Web Services - Google Code.htm" />
+    <None Include="Entities\Directions\The Google Directions API - Google Maps API Web Services - Google Code.htm" />
     <None Include="ReleaseNotes.md" />
     <None Include="..\LICENSE.md" Pack="true" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="WebSpark.HttpClientUtility" Version="1.0.10" />
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="10.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.0" />
+    <PackageReference Include="WebSpark.HttpClientUtility" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.3" />
   </ItemGroup>
 </Project>

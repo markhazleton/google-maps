@@ -53,7 +53,15 @@ namespace GoogleMapsApi.Test.IntegrationTests
         {
             var request = new GeocodingRequest { Address = "285 Bedford Ave, Brooklyn, NY 11211, USA", ApiKey = ApiKey, ClientID = "gme-ThisIsAUnitTest", SigningKey = "AAECAwQFBgcICQoLDA0ODxAREhM=" };
 
-            await Assert.ThrowsExceptionAsync<HttpRequestException>(() => GoogleMaps.Geocode.QueryAsync(request, _httpClientService));
+            try
+            {
+                await GoogleMaps.Geocode.QueryAsync(request, _httpClientService);
+                Assert.Fail("Expected HttpRequestException was not thrown.");
+            }
+            catch (HttpRequestException)
+            {
+                // Expected exception
+            }
         }
 
         [TestMethod]
@@ -61,9 +69,15 @@ namespace GoogleMapsApi.Test.IntegrationTests
         {
             var request = new GeocodingRequest { Address = "285 Bedford Ave, Brooklyn, NY 11211, USA", ClientID = "gme-ThisIsAUnitTest", SigningKey = "AAECAwQFBgcICQoLDA0ODxAREhM=" };
 
-            var ex = Assert.ThrowsException<AggregateException>(
-                          () => GoogleMaps.Geocode.QueryAsync(request, _httpClientService).Wait());
-            Assert.IsInstanceOfType(ex.InnerException, typeof(HttpRequestException));
+            try
+            {
+                GoogleMaps.Geocode.QueryAsync(request, _httpClientService).Wait();
+                Assert.Fail("Expected AggregateException was not thrown.");
+            }
+            catch (AggregateException ex)
+            {
+                Assert.IsInstanceOfType(ex.InnerException, typeof(HttpRequestException));
+            }
         }
 
         [TestMethod]
@@ -75,9 +89,15 @@ namespace GoogleMapsApi.Test.IntegrationTests
             var task = GoogleMaps.Geocode.QueryAsync(request, _httpClientService, tokeSource.Token);
             tokeSource.Cancel();
 
-            var ex = Assert.ThrowsException<AggregateException>(
-                () => task.Wait());
-            Assert.IsInstanceOfType(ex.InnerException, typeof(HttpRequestException));
+            try
+            {
+                task.Wait();
+                Assert.Fail("Expected AggregateException was not thrown.");
+            }
+            catch (AggregateException ex)
+            {
+                Assert.IsInstanceOfType(ex.InnerException, typeof(HttpRequestException));
+            }
         }
 
         [TestMethod]
@@ -89,9 +109,15 @@ namespace GoogleMapsApi.Test.IntegrationTests
 
             var task = GoogleMaps.Geocode.QueryAsync(request, _httpClientService, cts.Token);
 
-            var ex = Assert.ThrowsException<AggregateException>(
-                            () => task.Wait());
-            Assert.IsInstanceOfType(ex.InnerException, typeof(HttpRequestException));
+            try
+            {
+                task.Wait();
+                Assert.Fail("Expected AggregateException was not thrown.");
+            }
+            catch (AggregateException ex)
+            {
+                Assert.IsInstanceOfType(ex.InnerException, typeof(HttpRequestException));
+            }
         }
 
         [TestMethod]

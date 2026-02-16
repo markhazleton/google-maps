@@ -1,5 +1,6 @@
 using FastEndpoints;
 using GoogleMapsApi.Entities.Geocoding.Response;
+using System.Text.Json;
 
 namespace FastEndpointApi.endpoints.Geocode;
 /// <summary>
@@ -34,11 +35,14 @@ public class GeocodeLatLongEndpoint(IGeocodeService geocodeService, ILogger<Geoc
 
             if (geocodeResponse == null)
             {
-                await SendNotFoundAsync(cancellation: ct);
+                HttpContext.Response.StatusCode = 404;
+                await HttpContext.Response.CompleteAsync();
             }
             else
             {
-                await SendAsync(geocodeResponse, cancellation: ct);
+                HttpContext.Response.StatusCode = 200;
+                HttpContext.Response.ContentType = "application/json";
+                await HttpContext.Response.WriteAsJsonAsync(geocodeResponse, ct);
             }
         }
         catch (Exception ex)
@@ -87,11 +91,14 @@ public class GeocodeAddressEndpoint(IGeocodeService geocodeService, ILogger<Geoc
 
             if (geocodeResponse == null)
             {
-                await SendNotFoundAsync(cancellation: ct);
+                HttpContext.Response.StatusCode = 404;
+                await HttpContext.Response.CompleteAsync();
             }
             else
             {
-                await SendAsync(geocodeResponse, cancellation: ct);
+                HttpContext.Response.StatusCode = 200;
+                HttpContext.Response.ContentType = "application/json";
+                await HttpContext.Response.WriteAsJsonAsync(geocodeResponse, ct);
             }
         }
         catch (Exception ex)
