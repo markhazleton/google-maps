@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace GoogleMapsApi.Test.IntegrationTests
 {
     [TestClass]
-    class PlaceAutocompleteTests : BaseTestIntegration
+    public class PlaceAutocompleteTests : BaseTestIntegration
     {
         [TestMethod]
         public async Task ReturnsNoResults()

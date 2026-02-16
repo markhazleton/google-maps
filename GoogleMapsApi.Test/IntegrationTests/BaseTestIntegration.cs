@@ -1,8 +1,11 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System;
 using System.IO;
 using System.Net.Http;
 using WebSpark.HttpClientUtility.RequestResult;
+using WebSpark.HttpClientUtility.StringConverter;
 
 namespace GoogleMapsApi.Test.IntegrationTests
 {
@@ -15,7 +18,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
     public class BaseTestIntegration
     {
         private readonly IConfigurationRoot Configuration;
-        protected readonly IHttpClientFactory _httpClientFactory;
+        protected readonly IHttpClientFactory? _httpClientFactory;
         protected readonly IHttpRequestResultService _httpClientService;
 
         public BaseTestIntegration()
@@ -29,17 +32,29 @@ namespace GoogleMapsApi.Test.IntegrationTests
 
             var services = new ServiceCollection();
             services.AddHttpClient();
+            services.AddLogging(builder =>
+            {
+                builder.AddConsole();
+                builder.AddDebug();
+            });
+            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddSingleton<IStringConverter, NewtonsoftJsonStringConverter>();
+            services.AddTransient<IHttpRequestResultService, HttpRequestResultService>();
+
             var serviceProvider = services.BuildServiceProvider();
             _httpClientFactory = serviceProvider.GetService<IHttpClientFactory>();
-            // _httpClientService = new HttpRequestResultService(_httpClientFactory, new NewtonsoftJsonStringConverter());
-
+            _httpClientService = serviceProvider.GetRequiredService<IHttpRequestResultService>();
         }
-        // Add check for null api and throw exception
+
         protected string ApiKey
         {
             get
             {
                 var apiKey = Configuration.GetValue<string>("GOOGLE_API_KEY");
+                if (string.IsNullOrEmpty(apiKey))
+                {
+                    throw new InvalidOperationException("Google API Key is not configured. Please set GOOGLE_API_KEY in appsettings.json, user secrets, or environment variables.");
+                }
                 return apiKey;
             }
         }

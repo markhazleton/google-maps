@@ -4,15 +4,14 @@
     <LangVersion>latest</LangVersion>
     <OutputType>Library</OutputType>
     <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);CS8602;CS8629</NoWarn>
     <UserSecretsId>3f95bb96-2fb2-4433-9bbb-ce0f3dbd3cec</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.0" />
     <PackageReference Include="MSTest.TestFramework" Version="3.7.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.7.0" />
-    <PackageReference Include="System.Text.Json" Version="10.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GoogleMapsApi\GoogleMapsApi.csproj" />

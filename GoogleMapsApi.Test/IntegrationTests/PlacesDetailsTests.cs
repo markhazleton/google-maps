@@ -58,6 +58,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
 
             AssertInconclusive.NotExceedQuota(result);
             Assert.AreEqual(Status.OK, result.Status);
+            Assert.IsNotNull(result.Result.PriceLevel);
             Assert.IsTrue(anyPriceLevel.Contains(result.Result.PriceLevel.Value));
         }
 
@@ -87,7 +88,7 @@ namespace GoogleMapsApi.Test.IntegrationTests
              */
         }
 
-        private string cachedMyPlaceId;
+        private string? cachedMyPlaceId;
         private async Task<string> GetMyPlaceId()
         {
             if (cachedMyPlaceId == null)
